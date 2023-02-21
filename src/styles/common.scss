@@ -1,0 +1,8 @@
+body {
+  -webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-rendering: optimizeLegibility;
+  font-family: $primary-font;
+  background: $primary-bg-color;
+  color: $primary-text-color;
+}

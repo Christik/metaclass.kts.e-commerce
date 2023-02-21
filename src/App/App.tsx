@@ -6,7 +6,7 @@ import CatalogPage from "./pages/CatalogPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import ProductPage from "./pages/ProductPage";
 
-import "./App.css";
+import "./App.scss";
 
 const App = () => {
   return (

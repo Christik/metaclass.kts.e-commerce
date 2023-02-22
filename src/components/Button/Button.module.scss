@@ -1,0 +1,42 @@
+@import "@styles/variables.scss";
+
+/*=========================
+  Button
+===========================*/
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0 18px;
+  min-height: 55px;
+  padding: 10px 28px;
+  border: none;
+  color: $inverted-text-color;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.3em;
+  background: $accent-bg-color;
+  cursor: pointer;
+}
+
+.loader {
+  margin-left: -8px;
+}
+
+/*=========================
+  States
+===========================*/
+
+.disabled {
+  background-color: $tertiary-bg-color;
+  pointer-events: none;
+}
+
+/*=========================
+  Hover
+===========================*/
+
+.button:hover {
+  opacity: .7;
+}

@@ -1,0 +1,36 @@
+@import "@styles/variables.scss";
+@import "@styles/container.scss";
+
+/*=========================
+  Header
+===========================*/
+
+.header {
+  border-bottom: solid 1px $primary-border-color;
+}
+
+.inner {
+  @extend .container;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 120px;
+}
+
+/*=========================
+  Logo
+===========================*/
+
+.logo,
+.activeLogo {
+  display: block;
+
+  img {
+    display: block;
+  }
+}
+
+.activeLogo {
+  pointer-events: none;
+}

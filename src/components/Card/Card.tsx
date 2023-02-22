@@ -1,5 +1,6 @@
 import { ReactNode, MouseEventHandler, FC } from "react";
 
+import Text from "@components/Text";
 import Title, { TitleSize } from "@components/Title";
 import classnames from "classnames";
 
@@ -30,7 +31,7 @@ const Card: FC<CardProps> = (props) => {
         {title}
       </Title>
 
-      <p className={styles.subtitle}>{subtitle}</p>
+      <Text>{subtitle}</Text>
 
       {price && <div className={styles.price}>{price}</div>}
     </article>

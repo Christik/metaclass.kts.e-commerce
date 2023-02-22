@@ -4,7 +4,7 @@ import Loader from "@components/Loader";
 
 import styles from "./WithLoader.module.scss";
 
-export type WithLoaderProps = PropsWithChildren<{
+type WithLoaderProps = PropsWithChildren<{
   loading: boolean;
 }>;
 

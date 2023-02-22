@@ -15,7 +15,7 @@ export enum LoaderType {
   inverted = "inverted",
 }
 
-export type LoaderProps = {
+type LoaderProps = {
   loading?: boolean;
   size?: LoaderSize;
   type?: LoaderType;

@@ -5,7 +5,7 @@ import classnames from "classnames";
 
 import styles from "./Button.module.scss";
 
-export type ButtonProps = PropsWithChildren<{
+type ButtonProps = PropsWithChildren<{
   loading?: boolean;
 }> &
   ButtonHTMLAttributes<HTMLButtonElement>;

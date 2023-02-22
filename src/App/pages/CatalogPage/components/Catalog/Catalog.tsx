@@ -1,40 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Badge from "@components/Badge";
 import CardList from "@components/CardList";
+import Loader from "@components/Loader";
 import Title from "@components/Title";
+import { Product } from "@config/types";
+import getProducts from "@services/products";
 
 import styles from "./Catalog.module.scss";
 
-const testProducts = [
-  {
-    id: 0,
-    image: "https://placeimg.com/640/480/any?r=0.9300320592588625",
-    category: "Others",
-    title: "Handmade fresh table",
-    subtitle: "Andy shoes are designed to keeping in...",
-    price: 687,
-  },
-  {
-    id: 1,
-    image: "https://placeimg.com/640/480/any?r=0.9178516507833767",
-    category: "Others",
-    title: "Handmade fresh table",
-    subtitle: "Andy shoes are designed to keeping in...",
-    price: 687,
-  },
-  {
-    id: 2,
-    image: "https://placeimg.com/640/480/any?r=0.9178516507833767",
-    category: "Others",
-    title: "Handmade fresh table",
-    subtitle: "Andy shoes are designed to keeping in...",
-    price: 687,
-  },
-];
-
 const Catalog = () => {
-  const [products] = useState(testProducts);
+  const [products, setProducts] = useState<Product[] | null>(null);
+  const isLoading = products === null;
+
+  useEffect(() => {
+    const initProducts = async () => {
+      const data = await getProducts();
+      setProducts(data);
+    };
+
+    initProducts();
+  }, []);
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <section>

@@ -1,7 +1,13 @@
-import CardList from "./components/CardList";
+import CardList from "@components/CardList";
+import Title from "@components/Title";
 
 const CatalogPage = () => {
-  return <CardList />;
+  return (
+    <>
+      <Title>Total product</Title>
+      <CardList />
+    </>
+  );
 };
 
 export default CatalogPage;

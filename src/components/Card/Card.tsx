@@ -1,5 +1,6 @@
 import { ReactNode, MouseEventHandler, FC } from "react";
 
+import Title, { TitleSize } from "@components/Title";
 import classnames from "classnames";
 
 import styles from "./Card.module.scss";
@@ -22,9 +23,15 @@ const Card: FC<CardProps> = (props) => {
       onClick={onClick}
     >
       <img className={styles.preview} src={image} alt={title} />
+
       {category && <p className={styles.category}>{category}</p>}
-      <p className={styles.title}>{title}</p>
+
+      <Title className={styles.title} size={TitleSize.xs} as="p">
+        {title}
+      </Title>
+
       <p className={styles.subtitle}>{subtitle}</p>
+
       {price && <div className={styles.price}>{price}</div>}
     </article>
   );

@@ -21,14 +21,17 @@ const TagMap = {
 type TitleProps = PropsWithChildren<{
   size?: TitleSize;
   as?: ElementType;
+  className?: string;
 }>;
 
 const Title: FC<TitleProps> = (props) => {
-  const { size = TitleSize.m, as, children } = props;
+  const { size = TitleSize.m, as, className, children } = props;
   const Tag = as ?? TagMap[size];
 
   return (
-    <Tag className={classnames(styles.title, styles[size])}>{children}</Tag>
+    <Tag className={classnames(styles.title, styles[size], className)}>
+      {children}
+    </Tag>
   );
 };
 

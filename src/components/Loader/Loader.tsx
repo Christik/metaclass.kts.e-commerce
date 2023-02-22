@@ -22,7 +22,7 @@ export type LoaderProps = {
   className?: string;
 };
 
-export const Loader: React.FC<LoaderProps> = (props) => {
+const Loader: React.FC<LoaderProps> = (props) => {
   const {
     className,
     size = LoaderSize.m,
@@ -47,3 +47,5 @@ export const Loader: React.FC<LoaderProps> = (props) => {
     </div>
   );
 };
+
+export default Loader;

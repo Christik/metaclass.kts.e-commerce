@@ -1,1 +1,1 @@
-export { Loader, LoaderSize, LoaderType } from "./Loader";
+export { default, LoaderSize, LoaderType } from "./Loader";

@@ -1,5 +1,7 @@
+import CardList from "./components/CardList";
+
 const CatalogPage = () => {
-  return <div>catalog</div>;
+  return <CardList />;
 };
 
 export default CatalogPage;

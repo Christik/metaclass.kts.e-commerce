@@ -1,15 +1,12 @@
 import { FC } from "react";
 
-import Card, { CardProps } from "@components/Card";
+import Card from "@components/Card";
+import { Product } from "@config/types";
 
 import styles from "./CardList.module.scss";
 
-type CardListItem = CardProps & {
-  id: number;
-};
-
 type CardListProps = {
-  cards: CardListItem[];
+  cards: Product[];
 };
 
 const CardList: FC<CardListProps> = ({ cards }) => {

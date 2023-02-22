@@ -1,0 +1,21 @@
+/*=========================
+  Product Page
+===========================*/
+
+.content {
+  display: flex;
+  gap: 50px;
+}
+
+.gallery {
+  flex-shrink: 0;
+  flex-basis: min(50%, 600px);
+}
+
+.info {
+  flex-grow: 1;
+}
+
+.relatedItems {
+  margin-top: 50px;
+}

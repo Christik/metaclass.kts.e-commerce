@@ -1,44 +1,27 @@
-import Card from "@components/Card";
+import { FC } from "react";
+
+import Card, { CardProps } from "@components/Card";
 
 import styles from "./CardList.module.scss";
 
-const products = [
-  {
-    id: 0,
-    image: "https://placeimg.com/640/480/any?r=0.9300320592588625",
-    category: "Others",
-    title: "Handmade fresh table",
-    description: "Andy shoes are designed to keeping in...",
-    price: 687,
-  },
-  {
-    id: 1,
-    image: "https://placeimg.com/640/480/any?r=0.9178516507833767",
-    category: "Others",
-    title: "Handmade fresh table",
-    description: "Andy shoes are designed to keeping in...",
-    price: 687,
-  },
-  {
-    id: 2,
-    image: "https://placeimg.com/640/480/any?r=0.9178516507833767",
-    category: "Others",
-    title: "Handmade fresh table",
-    description: "Andy shoes are designed to keeping in...",
-    price: 687,
-  },
-];
+type CardListItem = CardProps & {
+  id: number;
+};
 
-const CardList = () => {
+type CardListProps = {
+  cards: CardListItem[];
+};
+
+const CardList: FC<CardListProps> = ({ cards }) => {
   return (
     <div className={styles.cardList}>
-      {products.map(({ id, image, category, title, description, price }) => (
+      {cards.map(({ id, image, category, title, subtitle, price }) => (
         <Card
           key={id}
           image={image}
           category={category}
           title={title}
-          subtitle={description}
+          subtitle={subtitle}
           price={`$${price}`}
         />
       ))}

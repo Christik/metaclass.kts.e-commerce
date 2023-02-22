@@ -4,7 +4,7 @@ import classnames from "classnames";
 
 import styles from "./Card.module.scss";
 
-type CardProps = {
+export type CardProps = {
   image: string;
   category?: string;
   title: string;

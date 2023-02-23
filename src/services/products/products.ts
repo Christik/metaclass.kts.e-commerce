@@ -1,4 +1,3 @@
-import adaptProduct from "@adapters/adapter";
 import { API_BASE_URL, API_ENDPOINTS } from "@config/api";
 import axios from "axios";
 
@@ -11,7 +10,7 @@ const getProducts = async () => {
     throw new Error();
   }
 
-  return response.data.map(adaptProduct);
+  return response.data;
 };
 
 export default getProducts;

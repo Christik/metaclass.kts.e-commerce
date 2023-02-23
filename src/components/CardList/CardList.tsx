@@ -13,11 +13,11 @@ const CardList: FC<CardListProps> = ({ cards }) => {
   return (
     <div className={styles.cardList}>
       {cards.map(
-        ({ id, image, category, title, description, price, onClick }) => (
+        ({ id, images, category, title, description, price, onClick }) => (
           <Card
             key={id}
-            image={image}
-            category={category}
+            image={images[0]}
+            category={category.name}
             title={title}
             subtitle={description}
             price={price}

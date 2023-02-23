@@ -1,9 +1,15 @@
 import { MouseEventHandler } from "react";
 
+export type Category = {
+  id: number;
+  name: string;
+  image: string;
+};
+
 export type Product = {
   id: number;
-  image: string;
-  category: string;
+  images: string[];
+  category: Category;
   title: string;
   description: string;
   price: number;

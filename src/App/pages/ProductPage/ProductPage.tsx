@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Loader from "@components/Loader";
 import { Product } from "@config/types";
 import getProduct from "@services/product";
+import { getProductsByCategory } from "@services/products";
 import { useParams } from "react-router-dom";
 
 import Gallery from "./components/Gallery";
@@ -10,12 +11,16 @@ import Info from "./components/Info";
 import RelatedItems from "./components/RelatedItems";
 import styles from "./ProductPage.module.scss";
 
+const RELATED_LIMIT = 3;
+
 const ProductPage = () => {
   const [product, setProduct] = useState<Product | null>(null);
+  const [relatedProducts, setRelatedProducts] = useState<Product[] | null>(
+    null
+  );
   const { id } = useParams<{ id: string }>();
-  const [relatedProducts] = useState(null);
-
-  const isLoading = product === null;
+  const productId = Number(id);
+  const isLoading = product === null || relatedProducts === null;
 
   useEffect(() => {
     const initProduct = async (id: number) => {
@@ -23,8 +28,22 @@ const ProductPage = () => {
       setProduct(data);
     };
 
-    initProduct(Number(id));
-  }, [id]);
+    initProduct(productId);
+  }, [productId]);
+
+  useEffect(() => {
+    if (product) {
+      const initRelatedProducts = async () => {
+        const data = await getProductsByCategory(
+          product.category.id,
+          RELATED_LIMIT
+        );
+        setRelatedProducts(data);
+      };
+
+      initRelatedProducts();
+    }
+  }, [product]);
 
   if (isLoading) {
     return <Loader />;
@@ -40,12 +59,10 @@ const ProductPage = () => {
         <Info title={title} description={description} price={price} />
       </div>
 
-      {relatedProducts && (
-        <RelatedItems
-          className={styles.relatedItems}
-          products={relatedProducts}
-        />
-      )}
+      <RelatedItems
+        className={styles.relatedItems}
+        products={relatedProducts}
+      />
     </>
   );
 };

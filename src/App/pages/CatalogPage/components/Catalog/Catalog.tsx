@@ -8,21 +8,31 @@ import Title from "@components/Title";
 import { ROUTS } from "@config/routs";
 import { Product } from "@config/types";
 import { getAllProducts } from "@services/products";
+import { usePagination } from "@utils/usePagination";
 import { generatePath, useNavigate } from "react-router-dom";
 
 import styles from "./Catalog.module.scss";
 
-const DEFAULT_OFFSET = 0;
 const LIMIT = 9;
 
 const Catalog = () => {
   const [products, setProducts] = useState<Product[] | null>(null);
+  const [visibleProducts, setVisibleProducts] = useState<Product[] | null>(
+    null
+  );
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const navigate = useNavigate();
-  const isLoading = products === null;
+  const pagination = usePagination(LIMIT);
+  const isLoading = products === null || visibleProducts === null;
+
+  const onPageChange = (page: number) => {
+    setCurrentPage(page);
+    window.scrollTo(0, 0);
+  };
 
   useEffect(() => {
     const initProducts = async () => {
-      const data = await getAllProducts(DEFAULT_OFFSET, LIMIT);
+      const data = await getAllProducts();
 
       const updatedData = data.map((product: Product) => {
         product.onClick = () =>
@@ -36,6 +46,23 @@ const Catalog = () => {
     initProducts();
   }, [navigate]);
 
+  useEffect(() => {
+    if (products) {
+      pagination.setItems(products);
+    }
+  }, [products, pagination]);
+
+  useEffect(() => {
+    if (products) {
+      const items = products.slice(
+        LIMIT * currentPage - LIMIT,
+        LIMIT * currentPage
+      );
+
+      setVisibleProducts(items);
+    }
+  }, [products, currentPage]);
+
   if (isLoading) {
     return <Loader />;
   }
@@ -47,13 +74,13 @@ const Catalog = () => {
         <Badge>{products.length}</Badge>
       </header>
 
-      <CardList cards={products} />
+      <CardList cards={visibleProducts} />
 
       <Pagination
         className={styles.pagination}
-        total={5}
-        current={5}
-        onChange={() => undefined}
+        total={pagination.total}
+        current={currentPage}
+        onChange={onPageChange}
       />
     </section>
   );

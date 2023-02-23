@@ -6,7 +6,7 @@ import styles from "./Pagination.module.scss";
 
 type PaginationProps = {
   className?: string;
-  total: number;
+  total: number | null;
   current: number;
   onChange: (pageNumber: number) => void;
 };
@@ -18,7 +18,7 @@ const Pagination: FC<PaginationProps> = (props) => {
   const isPageFirst = current === 1;
   const isPageLast = current === total;
 
-  if (total < 2) {
+  if (!total || total < 2) {
     return null;
   }
 

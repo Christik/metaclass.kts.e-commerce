@@ -12,7 +12,7 @@ type CardListProps = {
 const CardList: FC<CardListProps> = ({ cards }) => {
   return (
     <div className={styles.cardList}>
-      {cards.map(({ id, image, category, title, subtitle, price }) => (
+      {cards.map(({ id, image, category, title, subtitle, price, onClick }) => (
         <Card
           key={id}
           image={image}
@@ -20,6 +20,7 @@ const CardList: FC<CardListProps> = ({ cards }) => {
           title={title}
           subtitle={subtitle}
           price={`$${price}`}
+          onClick={onClick}
         />
       ))}
     </div>

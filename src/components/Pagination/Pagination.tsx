@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useMemo } from "react";
 
 import classnames from "classnames";
 
@@ -6,7 +6,8 @@ import styles from "./Pagination.module.scss";
 
 type PaginationProps = {
   className?: string;
-  total: number | null;
+  length: number;
+  limit: number;
   current: number;
   onChange: (pageNumber: number) => void;
 };
@@ -14,44 +15,47 @@ type PaginationProps = {
 const SIBLING_COUNT = 2;
 
 const Pagination: FC<PaginationProps> = (props) => {
-  const { className, total, current, onChange } = props;
+  const { className, length, limit, current, onChange } = props;
+  const total = useMemo(() => Math.ceil(length / limit), [length, limit]);
   const isPageFirst = current === 1;
   const isPageLast = current === total;
 
-  if (!total || total < 2) {
+  const pages = useMemo(() => {
+    return Array.from({ length: total }).reduce(
+      (result: number[], _, index) => {
+        const pageNumber = index + 1;
+        const isEdge = pageNumber === 1 || pageNumber === total;
+        const isLeftDots = pageNumber < current - SIBLING_COUNT;
+        const isRightDots = pageNumber > current + SIBLING_COUNT;
+
+        if (isLeftDots && !isEdge) {
+          if (result.includes(-1)) {
+            return result;
+          }
+
+          result.push(-1);
+          return result;
+        }
+
+        if (isRightDots && !isEdge) {
+          if (result.includes(-2)) {
+            return result;
+          }
+
+          result.push(-2);
+          return result;
+        }
+
+        result.push(pageNumber);
+        return result;
+      },
+      []
+    );
+  }, [total, current]);
+
+  if (total < 2) {
     return null;
   }
-
-  const pages = Array.from({ length: total }).reduce(
-    (result: number[], _, index) => {
-      const pageNumber = index + 1;
-      const isEdge = pageNumber === 1 || pageNumber === total;
-      const isLeftDots = pageNumber < current - SIBLING_COUNT;
-      const isRightDots = pageNumber > current + SIBLING_COUNT;
-
-      if (isLeftDots && !isEdge) {
-        if (result.includes(-1)) {
-          return result;
-        }
-
-        result.push(-1);
-        return result;
-      }
-
-      if (isRightDots && !isEdge) {
-        if (result.includes(-2)) {
-          return result;
-        }
-
-        result.push(-2);
-        return result;
-      }
-
-      result.push(pageNumber);
-      return result;
-    },
-    []
-  );
 
   return (
     <nav className={classnames(styles.pagination, className)}>

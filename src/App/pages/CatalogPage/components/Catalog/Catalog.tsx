@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import Badge from "@components/Badge";
 import CardList from "@components/CardList";
@@ -8,7 +8,6 @@ import Title from "@components/Title";
 import { ROUTS } from "@config/routs";
 import { Product } from "@config/types";
 import { getAllProducts } from "@services/products";
-import { usePagination } from "@utils/usePagination";
 import { generatePath, useNavigate } from "react-router-dom";
 
 import styles from "./Catalog.module.scss";
@@ -22,13 +21,12 @@ const Catalog = () => {
   );
   const [currentPage, setCurrentPage] = useState<number>(1);
   const navigate = useNavigate();
-  const pagination = usePagination(LIMIT);
   const isLoading = products === null || visibleProducts === null;
 
-  const onPageChange = (page: number) => {
+  const onPageChange = useCallback((page: number) => {
     setCurrentPage(page);
     window.scrollTo(0, 0);
-  };
+  }, []);
 
   useEffect(() => {
     const initProducts = async () => {
@@ -45,12 +43,6 @@ const Catalog = () => {
 
     initProducts();
   }, [navigate]);
-
-  useEffect(() => {
-    if (products) {
-      pagination.setItems(products);
-    }
-  }, [products, pagination]);
 
   useEffect(() => {
     if (products) {
@@ -78,7 +70,8 @@ const Catalog = () => {
 
       <Pagination
         className={styles.pagination}
-        total={pagination.total}
+        length={products.length}
+        limit={LIMIT}
         current={currentPage}
         onChange={onPageChange}
       />

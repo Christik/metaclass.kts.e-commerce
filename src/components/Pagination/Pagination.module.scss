@@ -17,8 +17,13 @@
   &:first-child {
     margin-right: 15px;
   }
+
   &:last-child {
     margin-left: 15px;
+  }
+
+  &:has(.page) {
+    margin-left: -1px;
   }
 }
 
@@ -40,12 +45,14 @@
 ===========================*/
 
 .page {
+  position: relative;
   padding: 0 5px;
   border: solid 1px $primary-border-color;
   color: $primary-text-color;
   font-size: 18px;
   font-weight: 500;
   line-height: 1.8em;
+  background-color: $primary-bg-color;
   cursor: pointer;
 
   &.inactive {
@@ -58,6 +65,7 @@
   &:not(.inactive):hover {
     color: $accent-text-color;
     border-color: $accent-border-color;
+    z-index: 2;
   }
 }
 

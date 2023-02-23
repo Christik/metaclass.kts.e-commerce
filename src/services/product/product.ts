@@ -2,16 +2,16 @@ import adaptProduct from "@adapters/adapter";
 import { API_BASE_URL, API_ENDPOINTS } from "@config/api";
 import axios from "axios";
 
-const getProducts = async () => {
+const getProduct = async (id: number) => {
   const response = await axios.get(
-    `${API_BASE_URL}${API_ENDPOINTS.PRODUCTS}?offset=0&limit=9`
+    `${API_BASE_URL}${API_ENDPOINTS.PRODUCTS}${id}`
   );
 
   if (response.status !== 200) {
     throw new Error();
   }
 
-  return response.data.map(adaptProduct);
+  return adaptProduct(response.data);
 };
 
-export default getProducts;
+export default getProduct;

@@ -6,15 +6,16 @@ import styles from "./Gallery.module.scss";
 
 type GalleryProps = {
   className?: string;
+  image: string;
+  alt: string;
 };
 
-const Gallery: FC<GalleryProps> = ({ className }) => {
+const Gallery: FC<GalleryProps> = (props) => {
+  const { className, image, alt } = props;
+
   return (
     <div className={classnames(styles.gallery, className)}>
-      <img
-        src="https://placeimg.com/640/480/any?r=0.9178516507833767"
-        alt="gallery"
-      />
+      <img src={image} alt={alt} />
     </div>
   );
 };

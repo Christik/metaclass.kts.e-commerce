@@ -20,7 +20,7 @@ const adaptProduct = (product: OriginalProduct): Product => {
     image: images[0],
     category: category.name,
     title,
-    subtitle: description,
+    description,
     price,
   };
 

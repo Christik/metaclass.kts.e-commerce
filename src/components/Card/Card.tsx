@@ -1,4 +1,4 @@
-import { ReactNode, MouseEventHandler, FC } from "react";
+import { MouseEventHandler, FC } from "react";
 
 import Text from "@components/Text";
 import Title, { TitleSize } from "@components/Title";
@@ -11,7 +11,7 @@ export type CardProps = {
   category?: string;
   title: string;
   subtitle: string;
-  price?: ReactNode;
+  price?: number;
   onClick?: MouseEventHandler;
 };
 
@@ -33,7 +33,7 @@ const Card: FC<CardProps> = (props) => {
 
       <Text>{subtitle}</Text>
 
-      {price && <div className={styles.price}>{price}</div>}
+      {price && <div className={styles.price}>${price}</div>}
     </article>
   );
 };

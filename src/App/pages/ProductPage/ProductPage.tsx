@@ -1,4 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+import Loader from "@components/Loader";
+import { Product } from "@config/types";
+import getProduct from "@services/product";
+import { useParams } from "react-router-dom";
 
 import Gallery from "./components/Gallery";
 import Info from "./components/Info";
@@ -11,7 +16,7 @@ const testProducts = [
     image: "https://placeimg.com/640/480/any?r=0.9300320592588625",
     category: "Others",
     title: "Handmade fresh table",
-    subtitle: "Andy shoes are designed to keeping in...",
+    description: "Andy shoes are designed to keeping in...",
     price: 687,
   },
   {
@@ -19,7 +24,7 @@ const testProducts = [
     image: "https://placeimg.com/640/480/any?r=0.9178516507833767",
     category: "Others",
     title: "Handmade fresh table",
-    subtitle: "Andy shoes are designed to keeping in...",
+    description: "Andy shoes are designed to keeping in...",
     price: 687,
   },
   {
@@ -27,27 +32,45 @@ const testProducts = [
     image: "https://placeimg.com/640/480/any?r=0.9178516507833767",
     category: "Others",
     title: "Handmade fresh table",
-    subtitle: "Andy shoes are designed to keeping in...",
+    description: "Andy shoes are designed to keeping in...",
     price: 687,
   },
 ];
 
 const ProductPage = () => {
-  const [products] = useState(testProducts);
+  const [product, setProduct] = useState<Product | null>(null);
+  const { id } = useParams<{ id: string }>();
+  const [relatedProducts] = useState(testProducts);
+
+  const isLoading = product === null;
+
+  useEffect(() => {
+    const initProduct = async (id: number) => {
+      const data = await getProduct(id);
+      setProduct(data);
+    };
+
+    initProduct(Number(id));
+  }, [id]);
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  const { title, description, price, image } = product;
 
   return (
     <>
       <div className={styles.content}>
-        <Gallery className={styles.gallery} />
+        <Gallery className={styles.gallery} image={image} alt={title} />
 
-        <Info
-          title="White Aesthetic Chair"
-          description="Ergonomic executive chair upholstered in bonded black leather and PVC padded seat and back for all-day comfort and support"
-          price={99.98}
-        />
+        <Info title={title} description={description} price={price} />
       </div>
 
-      <RelatedItems className={styles.relatedItems} products={products} />
+      <RelatedItems
+        className={styles.relatedItems}
+        products={relatedProducts}
+      />
     </>
   );
 };

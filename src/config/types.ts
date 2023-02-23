@@ -1,5 +1,11 @@
-import { CardProps } from "@components/Card";
+import { MouseEventHandler } from "react";
 
-export type Product = CardProps & {
+export type Product = {
   id: number;
+  image: string;
+  category: string;
+  title: string;
+  description: string;
+  price: number;
+  onClick?: MouseEventHandler;
 };

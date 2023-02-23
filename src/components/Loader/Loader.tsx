@@ -15,10 +15,16 @@ export enum LoaderType {
   inverted = "inverted",
 }
 
+export enum LoaderPosition {
+  default = "default",
+  centered = "centered",
+}
+
 type LoaderProps = {
   loading?: boolean;
   size?: LoaderSize;
   type?: LoaderType;
+  position?: LoaderPosition;
   className?: string;
 };
 
@@ -27,6 +33,7 @@ const Loader: React.FC<LoaderProps> = (props) => {
     className,
     size = LoaderSize.m,
     type = LoaderType.default,
+    position = LoaderPosition.default,
     loading = true,
   } = props;
 
@@ -40,6 +47,7 @@ const Loader: React.FC<LoaderProps> = (props) => {
         styles.loader,
         styles[size],
         styles[type],
+        styles[position],
         className
       )}
     >

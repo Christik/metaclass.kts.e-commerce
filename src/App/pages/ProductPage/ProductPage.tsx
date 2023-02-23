@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import Loader from "@components/Loader";
+import Loader, { LoaderPosition } from "@components/Loader";
 import { Product } from "@config/types";
 import { getProduct } from "@store/product";
 import { getProductsByCategory } from "@store/products";
@@ -46,7 +46,7 @@ const ProductPage = () => {
   }, [product]);
 
   if (isLoading) {
-    return <Loader />;
+    return <Loader position={LoaderPosition.centered} />;
   }
 
   const { title, description, price, images } = product;

@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 
 import Badge from "@components/Badge";
 import CardList from "@components/CardList";
-import Loader from "@components/Loader";
+import Loader, { LoaderPosition } from "@components/Loader";
 import Pagination from "@components/Pagination";
 import Title from "@components/Title";
 import { ROUTS } from "@config/routs";
@@ -56,7 +56,7 @@ const Catalog = () => {
   }, [products, currentPage]);
 
   if (isLoading) {
-    return <Loader />;
+    return <Loader position={LoaderPosition.centered} />;
   }
 
   return (

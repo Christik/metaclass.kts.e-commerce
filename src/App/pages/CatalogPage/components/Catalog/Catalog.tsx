@@ -49,7 +49,12 @@ const Catalog = () => {
 
       <CardList cards={products} />
 
-      <Pagination className={styles.pagination} />
+      <Pagination
+        className={styles.pagination}
+        total={5}
+        current={5}
+        onChange={() => undefined}
+      />
     </section>
   );
 };

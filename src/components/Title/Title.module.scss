@@ -1,3 +1,5 @@
+@import "@styles/variables";
+
 /*=========================
   Title
 ===========================*/
@@ -7,11 +9,19 @@
   line-height: 1.3em;
   text-transform: capitalize;
 
-  &.xs { font-size: 26px; }
+  &.xs { font-size: 26px;
+    @media #{$mobile} { font-size: 14px; }
+  }
 
-  &.s { font-size: 32px; }
+  &.s { font-size: 32px;
+    @media #{$mobile} { font-size: 18px; }
+  }
 
-  &.m { font-size: 44px; }
+  &.m { font-size: 44px;
+    @media #{$mobile} { font-size: 18px; }
+  }
 
-  &.l { font-size: 64px; }
+  &.l { font-size: 64px;
+    @media #{$mobile} { font-size: 26px; }
+  }
 }

@@ -16,7 +16,9 @@ const Info: FC<InfoProps> = (props) => {
 
   return (
     <div className={styles.info}>
-      <Title as="h1">{title}</Title>
+      <Title className={styles.title} as="h1">
+        {title}
+      </Title>
       <Text className={styles.description}>{description}</Text>
       <Title className={styles.price} as="p">
         ${price}

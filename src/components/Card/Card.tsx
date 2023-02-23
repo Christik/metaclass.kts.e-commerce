@@ -31,7 +31,7 @@ const Card: FC<CardProps> = (props) => {
         {title}
       </Title>
 
-      <Text>{subtitle}</Text>
+      <Text className={styles.description}>{subtitle}</Text>
 
       {price && <div className={styles.price}>${price}</div>}
     </article>

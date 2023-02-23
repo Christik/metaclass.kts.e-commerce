@@ -9,8 +9,15 @@
   align-items: center;
   gap: 10px;
   margin-bottom: 50px;
+
+  @media #{$mobile} {
+    gap: 8px;
+    margin-bottom: 20px;
+  }
 }
 
 .pagination {
   margin-top: 80px;
+
+  @media #{$mobile} { margin-top: 30px; }
 }

@@ -16,4 +16,11 @@
   font-weight: 700;
   line-height: 1.3em;
   background: $secondary-bg-color;
+
+  @media #{$mobile} {
+    min-height: 26px;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 12px;;
+  }
 }

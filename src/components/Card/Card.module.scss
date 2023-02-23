@@ -22,6 +22,8 @@
   aspect-ratio: 197 / 180;
   object-fit: cover;
   background-color: $tertiary-bg-color;
+
+  @media #{$mobile} { margin-bottom: 17px; }
 }
 
 .category {
@@ -31,10 +33,19 @@
   font-weight: 700;
   line-height: 1.3em;
   text-transform: capitalize;
+
+  @media #{$mobile} {
+    margin-bottom: 10px;
+    font-size: 12px;
+  }
 }
 
 .title {
   margin-bottom: 6px;
+}
+
+.description {
+  @media #{$mobile} { font-size: 12px; }
 }
 
 .price {
@@ -42,4 +53,9 @@
   font-size: 24px;
   font-weight: 700;
   line-height: 1.3em;
+
+  @media #{$mobile} {
+    margin-top: 14px;
+    font-size: 14px;
+  }
 }

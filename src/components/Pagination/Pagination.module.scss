@@ -14,12 +14,12 @@
 }
 
 .item {
-  &:first-child {
-    margin-right: 15px;
+  &:first-child { margin-right: 15px;
+    @media #{$mobile} { margin-right: 12px; }
   }
 
-  &:last-child {
-    margin-left: 15px;
+  &:last-child { margin-left: 15px;
+    @media #{$mobile} { margin-left: 12px; }
   }
 
   &:has(.page) {
@@ -38,6 +38,11 @@
   text-align: center;
   background: none;
   border: none;
+
+  @media #{$mobile} {
+    height: 32px;
+    min-width: 32px;
+  }
 }
 
 /*=========================
@@ -54,6 +59,8 @@
   line-height: 1.8em;
   background-color: $primary-bg-color;
   cursor: pointer;
+
+  @media #{$mobile} { font-size: 14px; }
 
   &.inactive {
     color: $inverted-text-color;
@@ -88,6 +95,11 @@
     width: 12px;
     height: 24px;
     fill: none;
+
+    @media #{$mobile} {
+      width: 9px;
+      height: 18px;
+    }
   }
 
   path {

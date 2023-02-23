@@ -16,6 +16,10 @@
   align-items: center;
   justify-content: space-between;
   min-height: 120px;
+
+  @media #{$mobile} {
+    min-height: 72px;
+  }
 }
 
 /*=========================
@@ -25,9 +29,18 @@
 .logo,
 .activeLogo {
   display: block;
+  width: 130px;
+  height: 42px;
 
   img {
     display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  @media #{$mobile} {
+    width: 100px;
+    height: 32px;
   }
 }
 

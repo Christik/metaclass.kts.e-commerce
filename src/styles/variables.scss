@@ -1,3 +1,7 @@
+/*=========================
+  Colors
+===========================*/
+
 $primary-bg-color: #fff;
 $secondary-bg-color: #f9f9f9;
 $tertiary-bg-color: #d9d9d9;
@@ -13,7 +17,21 @@ $accent-border-color: $accent-bg-color;
 
 $shadow-color: $secondary-text-color;
 
+/*=========================
+  Shadows
+===========================*/
+
 $primary-shadow: 0px 4px 120px rgba($shadow-color, 15%);
 $secondary-shadow: 0px 4px 120px $shadow-color;
 
-$primary-font: 'Eudoxus Sans', sans-serif;
+/*=========================
+  Fonts
+===========================*/
+
+$primary-font: "Eudoxus Sans", sans-serif;
+
+/*=========================
+  Breakpoints
+===========================*/
+
+$mobile: "(max-width: 768px)";

@@ -1,0 +1,95 @@
+@import "@styles/variables.scss";
+
+/*=========================
+  Pagination
+===========================*/
+
+.pagination {
+  display: flex;
+  justify-content: center;
+}
+
+.list {
+  display: flex;
+}
+
+.item {
+  &:first-child {
+    margin-right: 15px;
+  }
+  &:last-child {
+    margin-left: 15px;
+  }
+}
+
+.page,
+.arrow,
+.divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 42px;
+  min-width: 38px;
+  text-align: center;
+}
+
+/*=========================
+  Page
+===========================*/
+
+.page {
+  padding: 0 5px;
+  border: solid 1px $primary-border-color;
+  color: $primary-text-color;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.8em;
+
+  &.inactive {
+    color: $inverted-text-color;
+    background-color: $accent-bg-color;
+    border-color: transparent;
+  }
+
+  &:not(.inactive):hover {
+    color: $accent-text-color;
+    border-color: $accent-border-color;
+  }
+}
+
+/*=========================
+  Arrow
+===========================*/
+
+.arrow {
+  position: relative;
+  overflow: hidden;
+  text-indent: -1000px;
+
+  svg {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: block;
+    width: 12px;
+    height: 24px;
+    fill: none;
+  }
+
+  path {
+    stroke: $primary-text-color;
+    stroke-width: 1.5px;
+    stroke-miterlimit: 10;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  &.inactive path {
+    stroke: $secondary-text-color;
+  }
+
+  &:not(.inactive):hover path {
+    stroke: $accent-text-color;
+  }
+}

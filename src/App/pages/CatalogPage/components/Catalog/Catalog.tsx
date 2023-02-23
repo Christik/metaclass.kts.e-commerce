@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Badge from "@components/Badge";
 import CardList from "@components/CardList";
 import Loader from "@components/Loader";
+import Pagination from "@components/Pagination";
 import Title from "@components/Title";
 import { ROUTS } from "@config/routs";
 import { Product } from "@config/types";
@@ -11,6 +12,9 @@ import { generatePath, useNavigate } from "react-router-dom";
 
 import styles from "./Catalog.module.scss";
 
+const DEFAULT_OFFSET = 0;
+const LIMIT = 9;
+
 const Catalog = () => {
   const [products, setProducts] = useState<Product[] | null>(null);
   const navigate = useNavigate();
@@ -18,7 +22,7 @@ const Catalog = () => {
 
   useEffect(() => {
     const initProducts = async () => {
-      const data = await getAllProducts();
+      const data = await getAllProducts(DEFAULT_OFFSET, LIMIT);
 
       const updatedData = data.map((product: Product) => {
         product.onClick = () =>
@@ -44,6 +48,8 @@ const Catalog = () => {
       </header>
 
       <CardList cards={products} />
+
+      <Pagination className={styles.pagination} />
     </section>
   );
 };

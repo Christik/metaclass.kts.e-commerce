@@ -7,7 +7,7 @@ import Pagination from "@components/Pagination";
 import Title from "@components/Title";
 import { ROUTS } from "@config/routs";
 import { Product } from "@config/types";
-import { getAllProducts } from "@services/products";
+import { getAllProducts } from "@store/products";
 import { generatePath, useNavigate } from "react-router-dom";
 
 import styles from "./Catalog.module.scss";

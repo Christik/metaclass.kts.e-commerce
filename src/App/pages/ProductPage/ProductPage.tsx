@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 
 import Loader from "@components/Loader";
 import { Product } from "@config/types";
-import getProduct from "@services/product";
-import { getProductsByCategory } from "@services/products";
+import { getProduct } from "@store/product";
+import { getProductsByCategory } from "@store/products";
 import { useParams } from "react-router-dom";
 
 import Gallery from "./components/Gallery";

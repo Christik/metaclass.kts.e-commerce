@@ -10,6 +10,7 @@ import Gallery from "./components/Gallery";
 import Info from "./components/Info";
 import RelatedItems from "./components/RelatedItems";
 import styles from "./ProductPage.module.scss";
+import NotFoundPage from "../NotFoundPage";
 
 const RELATED_LIMIT = 3;
 
@@ -18,14 +19,20 @@ const ProductPage = () => {
   const [relatedProducts, setRelatedProducts] = useState<Product[] | null>(
     null
   );
+  const [isError, setIsError] = useState<boolean>(false);
+
   const { id } = useParams<{ id: string }>();
   const productId = Number(id);
   const isLoading = product === null || relatedProducts === null;
 
   useEffect(() => {
     const initProduct = async (id: number) => {
-      const data = await getProduct(id);
-      setProduct(data);
+      try {
+        const data = await getProduct(id);
+        setProduct(data);
+      } catch (error) {
+        setIsError(true);
+      }
     };
 
     initProduct(productId);
@@ -44,6 +51,10 @@ const ProductPage = () => {
       initRelatedProducts();
     }
   }, [product]);
+
+  if (isError) {
+    return <NotFoundPage />;
+  }
 
   if (isLoading) {
     return <Loader position={LoaderPosition.centered} />;

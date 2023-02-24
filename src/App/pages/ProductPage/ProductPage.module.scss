@@ -17,6 +17,7 @@
 .gallery {
   flex-shrink: 0;
   flex-basis: min(50%, 600px);
+  max-width: 600px;
 }
 
 .info {

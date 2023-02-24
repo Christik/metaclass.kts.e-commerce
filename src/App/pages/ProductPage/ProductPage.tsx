@@ -65,7 +65,7 @@ const ProductPage = () => {
   return (
     <>
       <div className={styles.content}>
-        <Gallery className={styles.gallery} image={images[0]} alt={title} />
+        <Gallery className={styles.gallery} images={images} alt={title} />
 
         <Info title={title} description={description} price={price} />
       </div>

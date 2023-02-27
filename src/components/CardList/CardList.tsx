@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, memo } from "react";
 
 import Card from "@components/Card";
 import { Product } from "@config/types";
@@ -29,4 +29,4 @@ const CardList: FC<CardListProps> = ({ cards }) => {
   );
 };
 
-export default CardList;
+export default memo(CardList);

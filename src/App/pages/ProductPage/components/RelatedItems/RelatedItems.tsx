@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, memo } from "react";
 
 import CardList from "@components/CardList";
 import Title, { TitleSize } from "@components/Title";
@@ -23,4 +23,4 @@ const RelatedItems: FC<RelatedItemsProps> = ({ className, products }) => {
   );
 };
 
-export default RelatedItems;
+export default memo(RelatedItems);

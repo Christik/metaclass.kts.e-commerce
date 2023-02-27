@@ -1,4 +1,4 @@
-import { PropsWithChildren, FC, ButtonHTMLAttributes } from "react";
+import { PropsWithChildren, FC, ButtonHTMLAttributes, memo } from "react";
 
 import Loader, { LoaderSize, LoaderType } from "@components/Loader";
 import classnames from "classnames";
@@ -42,4 +42,4 @@ const Button: FC<ButtonProps> = ({
   );
 };
 
-export default Button;
+export default memo(Button);

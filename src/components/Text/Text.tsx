@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren } from "react";
+import { FC, PropsWithChildren, memo } from "react";
 
 import classnames from "classnames";
 
@@ -12,4 +12,4 @@ const Text: FC<TextProps> = ({ className, children }) => {
   return <p className={classnames(styles.text, className)}>{children}</p>;
 };
 
-export default Text;
+export default memo(Text);

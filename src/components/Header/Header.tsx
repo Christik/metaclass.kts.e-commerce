@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 import { ROUTS } from "@config/routs";
 import logo from "@static/img/logo.svg";
 import { NavLink } from "react-router-dom";
@@ -21,4 +23,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default memo(Header);

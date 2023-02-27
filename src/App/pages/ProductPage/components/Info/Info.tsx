@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, memo } from "react";
 
 import Text from "@components/Text";
 import Title from "@components/Title";
@@ -25,4 +25,4 @@ const Info: FC<InfoProps> = ({ title, description, price }) => {
   );
 };
 
-export default Info;
+export default memo(Info);

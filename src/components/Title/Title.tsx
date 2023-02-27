@@ -1,4 +1,4 @@
-import { ElementType, FC, PropsWithChildren } from "react";
+import { ElementType, FC, PropsWithChildren, memo } from "react";
 
 import classnames from "classnames";
 
@@ -45,4 +45,4 @@ const Title: FC<TitleProps> = ({
   );
 };
 
-export default Title;
+export default memo(Title);

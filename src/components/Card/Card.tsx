@@ -1,4 +1,4 @@
-import { MouseEventHandler, FC } from "react";
+import { MouseEventHandler, FC, memo } from "react";
 
 import Text from "@components/Text";
 import Title, { TitleSize } from "@components/Title";
@@ -45,4 +45,4 @@ const Card: FC<CardProps> = ({
   );
 };
 
-export default Card;
+export default memo(Card);

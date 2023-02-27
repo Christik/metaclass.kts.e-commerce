@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren } from "react";
+import { FC, PropsWithChildren, memo } from "react";
 
 import styles from "./Badge.module.scss";
 
@@ -8,4 +8,4 @@ const Badge: FC<BadgeProps> = ({ children }) => {
   return <div className={styles.badge}>{children}</div>;
 };
 
-export default Badge;
+export default memo(Badge);

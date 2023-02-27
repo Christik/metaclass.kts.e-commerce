@@ -1,4 +1,4 @@
-import { FC, useRef } from "react";
+import { FC, useRef, memo } from "react";
 
 import classnames from "classnames";
 import { Navigation } from "swiper";
@@ -61,4 +61,4 @@ const Gallery: FC<GalleryProps> = ({ className, images, alt }) => {
   );
 };
 
-export default Gallery;
+export default memo(Gallery);

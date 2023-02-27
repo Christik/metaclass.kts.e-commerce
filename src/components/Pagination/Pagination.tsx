@@ -1,4 +1,4 @@
-import { FC, useMemo } from "react";
+import { FC, useMemo, memo } from "react";
 
 import classnames from "classnames";
 
@@ -125,4 +125,4 @@ const Pagination: FC<PaginationProps> = ({
   );
 };
 
-export default Pagination;
+export default memo(Pagination);

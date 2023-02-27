@@ -1,4 +1,4 @@
-import React from "react";
+import { FC, memo } from "react";
 
 import classnames from "classnames";
 
@@ -28,7 +28,7 @@ type LoaderProps = {
   className?: string;
 };
 
-const Loader: React.FC<LoaderProps> = ({
+const Loader: FC<LoaderProps> = ({
   className,
   size = LoaderSize.m,
   type = LoaderType.default,
@@ -54,4 +54,4 @@ const Loader: React.FC<LoaderProps> = ({
   );
 };
 
-export default Loader;
+export default memo(Loader);

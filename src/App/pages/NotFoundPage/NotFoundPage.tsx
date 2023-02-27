@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 import Text from "@components/Text";
 import Title, { TitleSize } from "@components/Title";
 
@@ -14,4 +16,4 @@ const NotFoundPage = () => {
   );
 };
 
-export default NotFoundPage;
+export default memo(NotFoundPage);

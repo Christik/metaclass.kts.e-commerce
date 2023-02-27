@@ -10,7 +10,7 @@ type WithLoaderProps = PropsWithChildren<{
 
 const WithLoader: FC<WithLoaderProps> = ({ children, loading }) => {
   return (
-    <div className={styles.withLoader}>
+    <div className={styles["with-loader"]}>
       {children}
 
       {loading && (

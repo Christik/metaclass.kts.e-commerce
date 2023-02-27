@@ -24,13 +24,13 @@
   Sizes
 ===========================*/
 
-.s {
+.loader_size_s {
   width: 20px;
   height: 20px;
   border-width: 3px;
 }
 
-.l {
+.loader_size_l {
   width: 60px;
   height: 60px;
   border-width: 6px;
@@ -40,7 +40,7 @@
   Types
 ===========================*/
 
-.inverted {
+.loader_type_inverted {
   border-color: $inverted-text-color;
   border-right-color: transparent;
 }
@@ -49,7 +49,7 @@
   Position
 ===========================*/
 
-.centered {
+.loader_position_centered {
   margin-left: auto;
   margin-right: auto;
 }

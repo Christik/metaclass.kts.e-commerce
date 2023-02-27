@@ -11,7 +11,7 @@ type CardListProps = {
 
 const CardList: FC<CardListProps> = ({ cards }) => {
   return (
-    <div className={styles.cardList}>
+    <div className={styles["card-list"]}>
       {cards.map(
         ({ id, images, category, title, description, price, onClick }) => (
           <Card

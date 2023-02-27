@@ -43,9 +43,9 @@ const Loader: React.FC<LoaderProps> = ({
     <div
       className={classnames(
         styles.loader,
-        styles[size],
-        styles[type],
-        styles[position],
+        styles[`loader_size_${size}`],
+        styles[`loader_type_${type}`],
+        styles[`loader_position_${position}`],
         className
       )}
     >

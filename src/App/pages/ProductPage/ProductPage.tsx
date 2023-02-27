@@ -71,7 +71,7 @@ const ProductPage = () => {
       </div>
 
       <RelatedItems
-        className={styles.relatedItems}
+        className={styles["related-items"]}
         products={relatedProducts}
       />
     </>

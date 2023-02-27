@@ -11,7 +11,7 @@ const Header = () => {
         <NavLink
           to={ROUTS.INDEX}
           className={({ isActive }) =>
-            isActive ? styles.activeLogo : styles.logo
+            isActive ? styles["active-logo"] : styles.logo
           }
         >
           <img src={logo} width="131" height="42" alt="Lalasia" />

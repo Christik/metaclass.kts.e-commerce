@@ -25,7 +25,9 @@ const Card: FC<CardProps> = ({
 }) => {
   return (
     <article
-      className={classnames(styles.card, { [styles.clickable]: onClick })}
+      className={classnames(styles.card, {
+        [styles["card_clickable"]]: onClick,
+      })}
       onClick={onClick}
     >
       <img className={styles.preview} src={image} alt={title} />

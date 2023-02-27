@@ -33,7 +33,13 @@ const Title: FC<TitleProps> = ({
   const Tag = as ?? TagMap[size];
 
   return (
-    <Tag className={classnames(styles.title, styles[size], className)}>
+    <Tag
+      className={classnames(
+        styles.title,
+        styles[`title_size_${size}`],
+        className
+      )}
+    >
       {children}
     </Tag>
   );

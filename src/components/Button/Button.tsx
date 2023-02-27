@@ -22,7 +22,7 @@ const Button: FC<ButtonProps> = ({
       className={classnames(
         styles.button,
         {
-          [styles.disabled]: disabled || loading,
+          [styles["button_disabled"]]: disabled || loading,
         },
         className
       )}

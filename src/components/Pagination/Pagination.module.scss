@@ -62,14 +62,14 @@
 
   @media #{$mobile} { font-size: 14px; }
 
-  &.inactive {
+  &_inactive {
     color: $inverted-text-color;
     background-color: $accent-bg-color;
     border-color: transparent;
     pointer-events: none;
   }
 
-  &:not(.inactive):hover {
+  &:not(.page_inactive):hover {
     color: $accent-text-color;
     border-color: $accent-border-color;
     z-index: 2;
@@ -110,7 +110,7 @@
     stroke-linejoin: round;
   }
 
-  &.inactive {
+  &_inactive {
     pointer-events: none;
 
     path {
@@ -118,7 +118,7 @@
     }
   }
 
-  &:not(.inactive):hover path {
+  &:not(.arrow_inactive):hover path {
     stroke: $accent-text-color;
   }
 }

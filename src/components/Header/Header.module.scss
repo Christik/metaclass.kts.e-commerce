@@ -27,7 +27,7 @@
 ===========================*/
 
 .logo,
-.activeLogo {
+.active-logo {
   display: block;
   width: 130px;
   height: 42px;
@@ -44,6 +44,6 @@
   }
 }
 
-.activeLogo {
+.active-logo {
   pointer-events: none;
 }

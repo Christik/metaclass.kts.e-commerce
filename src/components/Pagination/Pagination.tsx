@@ -69,7 +69,7 @@ const Pagination: FC<PaginationProps> = ({
           <button
             type="button"
             className={classnames(styles.arrow, styles.prev, {
-              [styles.inactive]: isPageFirst,
+              [styles["arrow_inactive"]]: isPageFirst,
             })}
             disabled={isPageFirst}
             onClick={() => onChange(current - 1)}
@@ -93,7 +93,7 @@ const Pagination: FC<PaginationProps> = ({
                 <button
                   type="button"
                   className={classnames(styles.page, {
-                    [styles.inactive]: isInactive,
+                    [styles["page_inactive"]]: isInactive,
                   })}
                   disabled={isInactive}
                   onClick={() => onChange(page)}
@@ -109,7 +109,7 @@ const Pagination: FC<PaginationProps> = ({
           <button
             type="button"
             className={classnames(styles.arrow, styles.next, {
-              [styles.inactive]: isPageLast,
+              [styles["arrow_inactive"]]: isPageLast,
             })}
             disabled={isPageLast}
             onClick={() => onChange(current + 1)}

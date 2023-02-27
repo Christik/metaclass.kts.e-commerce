@@ -8,9 +8,7 @@ type WithLoaderProps = PropsWithChildren<{
   loading: boolean;
 }>;
 
-const WithLoader: FC<WithLoaderProps> = (props) => {
-  const { children, loading } = props;
-
+const WithLoader: FC<WithLoaderProps> = ({ children, loading }) => {
   return (
     <div className={styles.withLoader}>
       {children}

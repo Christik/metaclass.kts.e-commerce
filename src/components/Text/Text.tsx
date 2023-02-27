@@ -8,9 +8,7 @@ type TextProps = PropsWithChildren<{
   className?: string;
 }>;
 
-const Text: FC<TextProps> = (props) => {
-  const { className, children } = props;
-
+const Text: FC<TextProps> = ({ className, children }) => {
   return <p className={classnames(styles.text, className)}>{children}</p>;
 };
 

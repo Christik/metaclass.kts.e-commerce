@@ -10,9 +10,13 @@ type ButtonProps = PropsWithChildren<{
 }> &
   ButtonHTMLAttributes<HTMLButtonElement>;
 
-const Button: FC<ButtonProps> = (props) => {
-  const { className, children, disabled, loading, ...attrs } = props;
-
+const Button: FC<ButtonProps> = ({
+  className,
+  children,
+  disabled,
+  loading,
+  ...attrs
+}) => {
   return (
     <button
       className={classnames(

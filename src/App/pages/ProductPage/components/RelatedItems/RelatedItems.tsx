@@ -11,9 +11,7 @@ type RelatedItemsProps = {
   products: Product[];
 };
 
-const RelatedItems: FC<RelatedItemsProps> = (props) => {
-  const { className, products } = props;
-
+const RelatedItems: FC<RelatedItemsProps> = ({ className, products }) => {
   return (
     <section className={className}>
       <Title className={styles.header} size={TitleSize.s}>

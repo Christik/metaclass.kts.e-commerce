@@ -11,9 +11,7 @@ type InfoProps = {
   price: number;
 };
 
-const Info: FC<InfoProps> = (props) => {
-  const { title, description, price } = props;
-
+const Info: FC<InfoProps> = ({ title, description, price }) => {
   return (
     <div className={styles.info}>
       <Title className={styles.title} as="h1">

@@ -14,8 +14,13 @@ type PaginationProps = {
 
 const SIBLING_COUNT = 2;
 
-const Pagination: FC<PaginationProps> = (props) => {
-  const { className, length, limit, current, onChange } = props;
+const Pagination: FC<PaginationProps> = ({
+  className,
+  length,
+  limit,
+  current,
+  onChange,
+}) => {
   const total = useMemo(() => Math.ceil(length / limit), [length, limit]);
   const isPageFirst = current === 1;
   const isPageLast = current === total;

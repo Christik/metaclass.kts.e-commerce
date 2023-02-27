@@ -24,8 +24,12 @@ type TitleProps = PropsWithChildren<{
   className?: string;
 }>;
 
-const Title: FC<TitleProps> = (props) => {
-  const { size = TitleSize.m, as, className, children } = props;
+const Title: FC<TitleProps> = ({
+  size = TitleSize.m,
+  as,
+  className,
+  children,
+}) => {
   const Tag = as ?? TagMap[size];
 
   return (

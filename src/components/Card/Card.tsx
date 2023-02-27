@@ -15,9 +15,14 @@ export type CardProps = {
   onClick?: MouseEventHandler;
 };
 
-const Card: FC<CardProps> = (props) => {
-  const { image, category, title, subtitle, price, onClick } = props;
-
+const Card: FC<CardProps> = ({
+  image,
+  category,
+  title,
+  subtitle,
+  price,
+  onClick,
+}) => {
   return (
     <article
       className={classnames(styles.card, { [styles.clickable]: onClick })}

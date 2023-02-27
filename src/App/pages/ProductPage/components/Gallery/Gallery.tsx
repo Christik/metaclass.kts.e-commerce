@@ -13,9 +13,7 @@ type GalleryProps = {
   alt: string;
 };
 
-const Gallery: FC<GalleryProps> = (props) => {
-  const { className, images, alt } = props;
-
+const Gallery: FC<GalleryProps> = ({ className, images, alt }) => {
   const navigationPrevRef = useRef<HTMLButtonElement | null>(null);
   const navigationNextRef = useRef<HTMLButtonElement | null>(null);
 

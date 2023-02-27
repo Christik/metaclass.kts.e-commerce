@@ -28,15 +28,13 @@ type LoaderProps = {
   className?: string;
 };
 
-const Loader: React.FC<LoaderProps> = (props) => {
-  const {
-    className,
-    size = LoaderSize.m,
-    type = LoaderType.default,
-    position = LoaderPosition.default,
-    loading = true,
-  } = props;
-
+const Loader: React.FC<LoaderProps> = ({
+  className,
+  size = LoaderSize.m,
+  type = LoaderType.default,
+  position = LoaderPosition.default,
+  loading = true,
+}) => {
   if (!loading) {
     return null;
   }

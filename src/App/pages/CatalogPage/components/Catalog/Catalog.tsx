@@ -15,13 +15,12 @@ import styles from "./Catalog.module.scss";
 const LIMIT = 9;
 
 const Catalog = () => {
+  const [productCount, setProductCount] = useState<number | null>(null);
   const [products, setProducts] = useState<Product[] | null>(null);
-  const [visibleProducts, setVisibleProducts] = useState<Product[] | null>(
-    null
-  );
   const [currentPage, setCurrentPage] = useState<number>(1);
+
   const navigate = useNavigate();
-  const isLoading = products === null || visibleProducts === null;
+  const isLoading = products === null || productCount === null;
 
   const onPageChange = useCallback((page: number) => {
     setCurrentPage(page);
@@ -29,8 +28,19 @@ const Catalog = () => {
   }, []);
 
   useEffect(() => {
-    const initProducts = async () => {
+    const initProductCount = async () => {
       const data = await getAllProducts();
+
+      setProductCount(data.length);
+    };
+
+    initProductCount();
+  }, []);
+
+  useEffect(() => {
+    const initProducts = async () => {
+      const offset = currentPage * LIMIT - LIMIT;
+      const data = await getAllProducts(offset, LIMIT);
 
       const updatedData = data.map((product: Product) => {
         product.onClick = () =>
@@ -42,18 +52,7 @@ const Catalog = () => {
     };
 
     initProducts();
-  }, [navigate]);
-
-  useEffect(() => {
-    if (products) {
-      const items = products.slice(
-        LIMIT * currentPage - LIMIT,
-        LIMIT * currentPage
-      );
-
-      setVisibleProducts(items);
-    }
-  }, [products, currentPage]);
+  }, [navigate, currentPage]);
 
   if (isLoading) {
     return <Loader position={LoaderPosition.centered} />;
@@ -63,14 +62,14 @@ const Catalog = () => {
     <section>
       <header className={styles.header}>
         <Title>Total product</Title>
-        <Badge>{products.length}</Badge>
+        <Badge>{productCount}</Badge>
       </header>
 
-      <CardList cards={visibleProducts} />
+      <CardList cards={products} />
 
       <Pagination
         className={styles.pagination}
-        length={products.length}
+        length={productCount}
         limit={LIMIT}
         current={currentPage}
         onChange={onPageChange}

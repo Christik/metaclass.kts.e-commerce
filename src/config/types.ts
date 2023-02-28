@@ -1,5 +1,3 @@
-import { MouseEventHandler } from "react";
-
 export type Category = {
   id: number;
   name: string;
@@ -13,5 +11,4 @@ export type Product = {
   title: string;
   description: string;
   price: number;
-  onClick?: MouseEventHandler;
 };

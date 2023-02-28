@@ -1,5 +1,5 @@
 export const ROUTS = {
   INDEX: "/",
-  PRODUCT: "product/:id",
+  PRODUCT: "/product/:id",
   NOT_FOUND: "*",
 };

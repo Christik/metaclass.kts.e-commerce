@@ -1,0 +1,32 @@
+@import "@styles/variables";
+
+/*=========================
+  Info
+===========================*/
+
+.info {
+  display: flex;
+  flex-direction: column;
+  padding-top: 32px;
+
+  @media #{$mobile} {
+    padding-top: 0;
+  }
+
+  .title {
+    @media #{$mobile} { font-size: 24px; }
+  }
+
+  .description {
+    margin-top: 20px;
+  }
+
+  .price {
+    margin: auto 0;
+
+    @media #{$mobile} {
+      margin-top: 30px;
+      font-size: 24px;
+    }
+  }
+}

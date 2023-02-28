@@ -1,0 +1,49 @@
+@import "@styles/variables.scss";
+@import "@styles/container.scss";
+
+/*=========================
+  Header
+===========================*/
+
+.header {
+  border-bottom: solid 2px $primary-border-color;
+}
+
+.inner {
+  @extend .container;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 120px;
+
+  @media #{$mobile} {
+    min-height: 72px;
+  }
+}
+
+/*=========================
+  Logo
+===========================*/
+
+.logo,
+.active-logo {
+  display: block;
+  width: 130px;
+  height: 42px;
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  @media #{$mobile} {
+    width: 100px;
+    height: 32px;
+  }
+}
+
+.active-logo {
+  pointer-events: none;
+}

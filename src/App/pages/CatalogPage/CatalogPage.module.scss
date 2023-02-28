@@ -1,0 +1,17 @@
+@import "@styles/variables";
+
+/*=========================
+  Catalog Page
+===========================*/
+
+.header {
+  margin: 0 auto 80px;
+  max-width: 600px;
+  text-align: center;
+
+  @media #{$mobile} { margin-bottom: 23px; }
+}
+
+.header__text {
+  margin-top: 20px;
+}

@@ -1,0 +1,124 @@
+@import "@styles/variables.scss";
+
+/*=========================
+  Pagination
+===========================*/
+
+.pagination {
+  display: flex;
+  justify-content: center;
+}
+
+.list {
+  display: flex;
+}
+
+.item {
+  &:first-child { margin-right: 15px;
+    @media #{$mobile} { margin-right: 12px; }
+  }
+
+  &:last-child { margin-left: 15px;
+    @media #{$mobile} { margin-left: 12px; }
+  }
+
+  &:has(.page) {
+    margin-left: -1px;
+  }
+}
+
+.page,
+.arrow,
+.dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 42px;
+  min-width: 38px;
+  text-align: center;
+  background: none;
+  border: none;
+
+  @media #{$mobile} {
+    height: 32px;
+    min-width: 32px;
+  }
+}
+
+/*=========================
+  Page
+===========================*/
+
+.page {
+  position: relative;
+  padding: 0 5px;
+  border: solid 1px $primary-border-color;
+  color: $primary-text-color;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.8em;
+  background-color: $primary-bg-color;
+  cursor: pointer;
+
+  @media #{$mobile} { font-size: 14px; }
+
+  &_inactive {
+    color: $inverted-text-color;
+    background-color: $accent-bg-color;
+    border-color: transparent;
+    pointer-events: none;
+  }
+
+  &:not(.page_inactive):hover {
+    color: $accent-text-color;
+    border-color: $accent-border-color;
+    z-index: 2;
+  }
+}
+
+/*=========================
+  Arrow
+===========================*/
+
+.arrow {
+  position: relative;
+  overflow: hidden;
+  text-indent: -1000px;
+  cursor: pointer;
+
+  svg {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: block;
+    width: 12px;
+    height: 24px;
+    fill: none;
+
+    @media #{$mobile} {
+      width: 9px;
+      height: 18px;
+    }
+  }
+
+  path {
+    stroke: $primary-text-color;
+    stroke-width: 1.5px;
+    stroke-miterlimit: 10;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  &_inactive {
+    pointer-events: none;
+
+    path {
+      stroke: $secondary-text-color;
+    }
+  }
+
+  &:not(.arrow_inactive):hover path {
+    stroke: $accent-text-color;
+  }
+}

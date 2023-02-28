@@ -1,0 +1,14 @@
+@import "@styles/variables.scss";
+
+/*=========================
+  Text
+===========================*/
+
+.text {
+  color: $secondary-text-color;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.8em;
+
+  @media #{$mobile} { font-size: 14px; }
+}

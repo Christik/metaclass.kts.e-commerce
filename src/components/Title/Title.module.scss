@@ -1,0 +1,27 @@
+@import "@styles/variables";
+
+/*=========================
+  Title
+===========================*/
+
+.title {
+  font-weight: 700;
+  line-height: 1.3em;
+  text-transform: capitalize;
+
+  &_size_xs { font-size: 26px;
+    @media #{$mobile} { font-size: 14px; }
+  }
+
+  &_size_s { font-size: 32px;
+    @media #{$mobile} { font-size: 18px; }
+  }
+
+  &_size_m { font-size: 44px;
+    @media #{$mobile} { font-size: 18px; }
+  }
+
+  &_size_l { font-size: 64px;
+    @media #{$mobile} { font-size: 26px; }
+  }
+}

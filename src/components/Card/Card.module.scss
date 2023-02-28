@@ -1,0 +1,61 @@
+@import "@styles/variables.scss";
+
+/*=========================
+  Card
+===========================*/
+
+.card {
+  width: 100%;
+  max-width: 394px;
+  font-family: $primary-font;
+
+  &_clickable {
+    cursor: pointer;
+  }
+}
+
+.preview {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-bottom: 26px;
+  aspect-ratio: 197 / 180;
+  object-fit: cover;
+  background-color: $tertiary-bg-color;
+
+  @media #{$mobile} { margin-bottom: 17px; }
+}
+
+.category {
+  margin-bottom: 14px;
+  color: $secondary-text-color;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.3em;
+  text-transform: capitalize;
+
+  @media #{$mobile} {
+    margin-bottom: 10px;
+    font-size: 12px;
+  }
+}
+
+.title {
+  margin-bottom: 6px;
+}
+
+.description {
+  @media #{$mobile} { font-size: 12px; }
+}
+
+.price {
+  margin-top: 18px;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.3em;
+
+  @media #{$mobile} {
+    margin-top: 14px;
+    font-size: 14px;
+  }
+}

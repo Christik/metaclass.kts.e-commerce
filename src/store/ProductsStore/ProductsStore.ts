@@ -40,6 +40,7 @@ export default class ProductsStore implements ILocalStore {
       count: computed,
       meta: computed,
       getProducts: action,
+      getProductsByCategory: action,
     });
   }
 
@@ -92,6 +93,32 @@ export default class ProductsStore implements ILocalStore {
       });
     } catch (error) {
       this._count = 0;
+      this._list = getInitialCollectionModel();
+      this._meta = Meta.error;
+    }
+  }
+
+  async getProductsByCategory(
+    id: number,
+    offset: number = 0,
+    limit: number = 0
+  ) {
+    this._list = getInitialCollectionModel();
+    this._meta = Meta.loading;
+
+    try {
+      const url = `${API_ENDPOINTS.PRODUCTS}?categoryId=${id}&offset=${offset}&limit=${limit}`;
+      const response = await this._apiStore.request(url);
+
+      runInAction(() => {
+        this._list = normalizeCollection<number, ProductApi, ProductModel>(
+          response.data,
+          (element) => element.id,
+          normalizeProduct
+        );
+        this._meta = Meta.success;
+      });
+    } catch (error) {
       this._list = getInitialCollectionModel();
       this._meta = Meta.error;
     }

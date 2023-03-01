@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import Badge from "@components/Badge";
 import CardList from "@components/CardList";
@@ -8,6 +8,7 @@ import Title from "@components/Title";
 import ProductCountStore from "@store/ProductCountStore";
 import ProductsStore from "@store/ProductsStore";
 import { Meta } from "@utils/meta";
+import { useLocalStore } from "@utils/useLocalStore";
 import { observer } from "mobx-react-lite";
 
 import styles from "./Catalog.module.scss";
@@ -17,19 +18,8 @@ const LIMIT = 9;
 const Catalog = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
 
-  const productsStoreRef = useRef<ProductsStore | null>(null);
-  const productCountStoreRef = useRef<ProductCountStore | null>(null);
-
-  if (productsStoreRef.current === null) {
-    productsStoreRef.current = new ProductsStore();
-  }
-
-  if (productCountStoreRef.current === null) {
-    productCountStoreRef.current = new ProductCountStore();
-  }
-
-  const productsStore = productsStoreRef.current;
-  const productCountStore = productCountStoreRef.current;
+  const productsStore = useLocalStore(() => new ProductsStore());
+  const productCountStore = useLocalStore(() => new ProductCountStore());
 
   const onPageChange = useCallback((page: number) => {
     setCurrentPage(page);

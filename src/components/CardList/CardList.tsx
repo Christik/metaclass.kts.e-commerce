@@ -2,13 +2,13 @@ import { FC, memo } from "react";
 
 import Card from "@components/Card";
 import { ROUTS } from "@config/routs";
-import { Product } from "@config/types";
+import { ProductModel } from "@store/models/product";
 import { generatePath, useNavigate } from "react-router";
 
 import styles from "./CardList.module.scss";
 
 type CardListProps = {
-  cards: Product[];
+  cards: ProductModel[];
 };
 
 const CardList: FC<CardListProps> = ({ cards }) => {

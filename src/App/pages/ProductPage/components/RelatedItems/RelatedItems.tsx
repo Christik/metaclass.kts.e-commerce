@@ -2,13 +2,13 @@ import { FC, memo } from "react";
 
 import CardList from "@components/CardList";
 import Title, { TitleSize } from "@components/Title";
-import { Product } from "@config/types";
+import { ProductModel } from "@store/models/product";
 
 import styles from "./RelatedItems.module.scss";
 
 type RelatedItemsProps = {
   className?: string;
-  products: Product[];
+  products: ProductModel[];
 };
 
 const RelatedItems: FC<RelatedItemsProps> = ({ className, products }) => {

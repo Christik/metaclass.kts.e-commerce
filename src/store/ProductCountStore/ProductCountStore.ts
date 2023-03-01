@@ -1,6 +1,7 @@
 import { API_BASE_URL, API_ENDPOINTS } from "@config/api";
 import ApiStore from "@store/ApiStore";
 import { Meta } from "@utils/meta";
+import { ILocalStore } from "@utils/useLocalStore";
 import {
   makeObservable,
   observable,
@@ -11,7 +12,7 @@ import {
 
 type PrivateFields = "_count" | "_meta";
 
-export default class ProductCountStore {
+export default class ProductCountStore implements ILocalStore {
   private readonly _apiStore = new ApiStore(API_BASE_URL);
 
   private _count = 0;
@@ -50,4 +51,6 @@ export default class ProductCountStore {
       this._meta = Meta.error;
     }
   }
+
+  destroy(): void {}
 }

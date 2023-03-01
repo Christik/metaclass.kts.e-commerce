@@ -1,7 +1,8 @@
 import { API_BASE_URL, API_ENDPOINTS } from "@config/api";
-import { Product } from "@config/types";
 import ApiStore from "@store/ApiStore";
+import { normalizeProduct, ProductModel } from "@store/models/product";
 import { Meta } from "@utils/meta";
+import { ILocalStore } from "@utils/useLocalStore";
 import {
   computed,
   makeObservable,
@@ -12,10 +13,10 @@ import {
 
 type PrivateFields = "_list" | "_meta";
 
-export default class ProductsStore {
+export default class ProductsStore implements ILocalStore {
   private readonly _apiStore = new ApiStore(API_BASE_URL);
 
-  private _list: Product[] = [];
+  private _list: ProductModel[] = [];
   private _meta: Meta = Meta.initial;
 
   constructor() {
@@ -28,7 +29,7 @@ export default class ProductsStore {
     });
   }
 
-  get list(): Product[] {
+  get list(): ProductModel[] {
     return this._list;
   }
 
@@ -45,11 +46,14 @@ export default class ProductsStore {
       const response = await this._apiStore.request(url);
 
       runInAction(() => {
-        this._list = response.data;
+        this._list = response.data.map(normalizeProduct);
         this._meta = Meta.success;
       });
     } catch (error) {
+      this._list = [];
       this._meta = Meta.error;
     }
   }
+
+  destroy(): void {}
 }

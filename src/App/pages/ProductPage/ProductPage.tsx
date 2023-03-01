@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 import Loader, { LoaderPosition } from "@components/Loader";
-import { Product } from "@config/types";
+import { ProductModel } from "@store/models/product";
 import { getProduct } from "@store/product";
 import { getProductsByCategory } from "@store/products";
 import { useParams } from "react-router-dom";
@@ -15,8 +15,8 @@ import NotFoundPage from "../NotFoundPage";
 const RELATED_LIMIT = 3;
 
 const ProductPage = () => {
-  const [product, setProduct] = useState<Product | null>(null);
-  const [relatedProducts, setRelatedProducts] = useState<Product[] | null>(
+  const [product, setProduct] = useState<ProductModel | null>(null);
+  const [relatedProducts, setRelatedProducts] = useState<ProductModel[] | null>(
     null
   );
   const [isError, setIsError] = useState<boolean>(false);

@@ -28,7 +28,9 @@ const RelatedItems: FC<RelatedItemsProps> = ({ className, category }) => {
 
   useEffect(() => {
     const initProducts = async () => {
-      await productsStore.getProductsByCategory(id, 0, LIMIT);
+      productsStore.setLimit(LIMIT);
+      productsStore.setCategory(id);
+      await productsStore.getProducts();
     };
 
     initProducts();

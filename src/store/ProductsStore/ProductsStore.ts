@@ -11,6 +11,7 @@ import {
   linearizeCollection,
   normalizeCollection,
 } from "@store/models/shared";
+import rootStore from "@store/RootStore/instance";
 import { Meta } from "@utils/meta";
 import { ILocalStore } from "@utils/useLocalStore";
 import {
@@ -19,9 +20,18 @@ import {
   observable,
   action,
   runInAction,
+  reaction,
+  IReactionDisposer,
 } from "mobx";
 
-type PrivateFields = "_list" | "_count" | "_meta";
+type PrivateFields =
+  | "_list"
+  | "_count"
+  | "_page"
+  | "_limit"
+  | "_meta"
+  | "_category"
+  | "_search";
 
 export default class ProductsStore implements ILocalStore {
   private readonly _apiStore = new ApiStore(API_BASE_URL);
@@ -29,18 +39,30 @@ export default class ProductsStore implements ILocalStore {
   private _list: CollectionModel<number, ProductModel> =
     getInitialCollectionModel();
   private _count: number = 0;
+  private _page: number = 1;
+  private _limit: number = 0;
+  private _offset: number = 0;
+  private _category: number | null = null;
+  private _search: string = rootStore.query.getParam("search");
   private _meta: Meta = Meta.initial;
 
   constructor() {
     makeObservable<ProductsStore, PrivateFields>(this, {
       _list: observable.ref,
-      _meta: observable,
       _count: observable,
+      _page: observable,
+      _limit: observable,
+      _category: observable,
+      _search: observable,
+      _meta: observable,
       list: computed,
       count: computed,
+      page: computed,
+      category: computed,
       meta: computed,
+      setCategory: action,
+      setPage: action,
       getProducts: action,
-      getProductsByCategory: action,
     });
   }
 
@@ -52,34 +74,53 @@ export default class ProductsStore implements ILocalStore {
     return this._count;
   }
 
+  get page(): number {
+    return this._page;
+  }
+
+  get limit(): number {
+    return this._limit;
+  }
+
+  get category(): number | null {
+    return this._category;
+  }
+
   get meta(): Meta {
     return this._meta;
   }
 
-  private async _getList(
-    offset: number = 0,
-    limit: number = 0
-  ): Promise<ProductApi[]> {
-    const url = `${API_ENDPOINTS.PRODUCTS}?offset=${offset}&limit=${limit}`;
+  setPage = (page: number) => {
+    this._page = page;
+    this._offset = this._page * this._limit - this._limit;
+  };
+
+  setLimit = (limit: number) => {
+    this._limit = limit;
+  };
+
+  setCategory = (id: number | null) => {
+    this._category = id;
+  };
+
+  private async _getList(offset: number = 0, limit: number = 0) {
+    const offsetPath = `offset=${offset}&limit=${limit}`;
+    const categoryPath = this._category ? `categoryId=${this._category}` : "";
+    const titlePath = this._search ? `title=${this._search}` : "";
+    const url = `${API_ENDPOINTS.PRODUCTS}?${offsetPath}&${categoryPath}&${titlePath}`;
+
     const response = await this._apiStore.request(url);
 
     return response.data;
   }
 
-  private async _getCount(): Promise<number> {
-    const response = await this._apiStore.request(API_ENDPOINTS.PRODUCTS);
-
-    return response.data.length;
-  }
-
-  async getProducts(offset: number = 0, limit: number = 0) {
-    this._count = 0;
+  getProducts = async () => {
     this._list = getInitialCollectionModel();
     this._meta = Meta.loading;
 
     try {
-      const list = await this._getList(offset, limit);
-      const count = await this._getCount();
+      const allList = await this._getList();
+      const list = await this._getList(this._offset, this._limit);
 
       runInAction(() => {
         this._list = normalizeCollection<number, ProductApi, ProductModel>(
@@ -88,7 +129,7 @@ export default class ProductsStore implements ILocalStore {
           normalizeProduct
         );
 
-        this._count = count;
+        this._count = allList.length;
         this._meta = Meta.success;
       });
     } catch (error) {
@@ -96,33 +137,15 @@ export default class ProductsStore implements ILocalStore {
       this._list = getInitialCollectionModel();
       this._meta = Meta.error;
     }
-  }
+  };
 
-  async getProductsByCategory(
-    id: number,
-    offset: number = 0,
-    limit: number = 0
-  ) {
-    this._list = getInitialCollectionModel();
-    this._meta = Meta.loading;
-
-    try {
-      const url = `${API_ENDPOINTS.PRODUCTS}?categoryId=${id}&offset=${offset}&limit=${limit}`;
-      const response = await this._apiStore.request(url);
-
-      runInAction(() => {
-        this._list = normalizeCollection<number, ProductApi, ProductModel>(
-          response.data,
-          (element) => element.id,
-          normalizeProduct
-        );
-        this._meta = Meta.success;
-      });
-    } catch (error) {
-      this._list = getInitialCollectionModel();
-      this._meta = Meta.error;
+  private readonly _qpReaction: IReactionDisposer = reaction(
+    () => rootStore.query.getParam("search"),
+    async (search) => {
+      this._search = search as string;
+      this.getProducts();
     }
-  }
+  );
 
   destroy(): void {}
 }

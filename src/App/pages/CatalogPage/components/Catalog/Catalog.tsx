@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 
 import Badge from "@components/Badge";
 import CardList from "@components/CardList";
@@ -15,26 +15,32 @@ import styles from "./Catalog.module.scss";
 const LIMIT = 9;
 
 const Catalog = () => {
-  const [currentPage, setCurrentPage] = useState<number>(1);
-
   const productsStore = useLocalStore(() => new ProductsStore());
 
   const isLoading = productsStore.meta === Meta.loading;
   const isSuccess = productsStore.meta === Meta.success;
 
-  const onPageChange = useCallback((page: number) => {
-    setCurrentPage(page);
-    window.scrollTo(0, 0);
-  }, []);
+  const onPageChange = useCallback(
+    (page: number) => {
+      const updateProducts = async () => {
+        window.scrollTo(0, 0);
+        productsStore.setPage(page);
+        await productsStore.getProducts();
+      };
+
+      updateProducts();
+    },
+    [productsStore]
+  );
 
   useEffect(() => {
     const initProducts = async () => {
-      const offset = currentPage * LIMIT - LIMIT;
-      await productsStore.getProducts(offset, LIMIT);
+      productsStore.setLimit(LIMIT);
+      await productsStore.getProducts();
     };
 
     initProducts();
-  }, [currentPage, productsStore]);
+  }, [productsStore]);
 
   return (
     <section>
@@ -52,8 +58,8 @@ const Catalog = () => {
       <Pagination
         className={styles.pagination}
         length={productsStore.count}
-        limit={LIMIT}
-        current={currentPage}
+        limit={productsStore.limit}
+        current={productsStore.page}
         onChange={onPageChange}
       />
     </section>

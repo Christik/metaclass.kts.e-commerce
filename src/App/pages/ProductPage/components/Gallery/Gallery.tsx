@@ -3,8 +3,10 @@ import { FC, useRef, memo } from "react";
 import classnames from "classnames";
 import { Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { NavigationOptions } from "swiper/types";
 
 import styles from "./Gallery.module.scss";
+
 import "swiper/css";
 
 type GalleryProps = {
@@ -29,6 +31,12 @@ const Gallery: FC<GalleryProps> = ({ className, images, alt }) => {
         navigation={{
           prevEl: navigationPrevRef.current,
           nextEl: navigationNextRef.current,
+        }}
+        onBeforeInit={(swiper) => {
+          (swiper.params.navigation as NavigationOptions).prevEl =
+            navigationPrevRef.current;
+          (swiper.params.navigation as NavigationOptions).nextEl =
+            navigationNextRef.current;
         }}
       >
         {images.map((image) => (

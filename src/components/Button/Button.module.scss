@@ -18,6 +18,12 @@
   line-height: 1.3em;
   background: $accent-bg-color;
   cursor: pointer;
+
+  @media #{$mobile} {
+    min-height: 38px;
+    padding: 5px 18px;
+    font-size: 14px;
+  }
 }
 
 .loader {

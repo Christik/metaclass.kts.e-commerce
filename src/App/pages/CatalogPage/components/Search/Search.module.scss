@@ -1,0 +1,64 @@
+@import "@styles/variables";
+
+/*=========================
+  Search
+===========================*/
+
+.search {
+  display: flex;
+  align-items: center;
+  padding: 15px 28px;
+  background: $primary-bg-color;
+  box-shadow: 0px 4px 20px rgba(175, 173, 181, 0.2);
+
+  @media #{$mobile} {
+    padding: 8px;
+  }
+}
+
+.icon {
+  order: -1;
+  margin-right: 18px;
+  display: block;
+  width: 32px;
+  height: 32px;
+  fill: none;
+
+  path {
+    stroke: $secondary-text-color;
+    stroke-width: 2px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  @media #{$mobile} {
+    margin-left: 6px;
+    margin-right: 12px;
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.input {
+  flex-grow: 1;
+  color: $primary-text-color;
+  font-size: 18px;
+  font-weight: 500;
+  border: none;
+  background: none;
+  outline: none;
+
+  @media #{$mobile} { font-size: 14px; }
+
+  &::placeholder {
+    color: $secondary-text-color;
+  }
+
+  &:focus + .icon path {
+    stroke: $accent-text-color;
+  }
+}
+
+.button {
+  flex-shrink: 0;
+}

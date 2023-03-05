@@ -6,7 +6,6 @@ type PrivateFields = "_params";
 export default class QueryParamsStore {
   private _params: qs.ParsedQs = {};
   private _search: string = "";
-  private _category: string = "";
 
   constructor() {
     makeObservable<QueryParamsStore, PrivateFields>(this, {
@@ -25,13 +24,6 @@ export default class QueryParamsStore {
     if (this._search !== search) {
       this._search = search;
       this._params = qs.parse(search);
-    }
-  }
-
-  setCategory(category: string) {
-    if (this._category !== category) {
-      this._category = category;
-      this._params = qs.parse(category);
     }
   }
 }

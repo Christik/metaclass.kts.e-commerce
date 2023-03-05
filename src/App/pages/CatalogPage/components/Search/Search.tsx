@@ -1,7 +1,13 @@
-import { useState, SyntheticEvent, ChangeEvent, FC } from "react";
+import {
+  useState,
+  SyntheticEvent,
+  ChangeEvent,
+  FC,
+  useEffect,
+  useCallback,
+} from "react";
 
 import Button from "@components/Button";
-import { useQueryParamsStoreInit } from "@store/RootStore/hooks/useQueryParamsStoreInit";
 import rootStore from "@store/RootStore/instance";
 import classnames from "classnames";
 import { observer } from "mobx-react-lite";
@@ -14,24 +20,32 @@ type SearchProps = {
 };
 
 const Search: FC<SearchProps> = ({ className }) => {
-  useQueryParamsStoreInit();
-
   const [searchParams, setSearchParams] = useSearchParams();
-  const [search, setSearch] = useState(
-    rootStore.query.getParam("search") ?? ""
+  const [search, setSearch] = useState("");
+
+  const onInputChange = useCallback((evt: ChangeEvent<HTMLInputElement>) => {
+    evt.preventDefault();
+    setSearch(evt.target.value);
+  }, []);
+
+  const onFormSubmit = useCallback(
+    (evt: SyntheticEvent) => {
+      evt.preventDefault();
+
+      if (search) {
+        searchParams.set("search", search);
+      } else {
+        searchParams.delete("search");
+      }
+
+      setSearchParams(searchParams);
+    },
+    [search, searchParams, setSearchParams]
   );
 
-  const onFormSubmit = (evt: SyntheticEvent) => {
-    evt.preventDefault();
-
-    if (search) {
-      searchParams.set("search", search);
-    } else {
-      searchParams.delete("search");
-    }
-
-    setSearchParams(searchParams);
-  };
+  useEffect(() => {
+    setSearch(rootStore.query.getParam("search"));
+  }, []);
 
   return (
     <form
@@ -42,10 +56,8 @@ const Search: FC<SearchProps> = ({ className }) => {
         className={styles.input}
         type="text"
         placeholder="Search property"
-        value={search}
-        onChange={(evt: ChangeEvent<HTMLInputElement>) =>
-          setSearch(evt.target.value)
-        }
+        value={search || ""}
+        onChange={onInputChange}
       />
 
       <svg className={styles.icon} viewBox="0 0 32 32">

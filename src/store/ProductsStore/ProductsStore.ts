@@ -146,7 +146,7 @@ export default class ProductsStore implements ILocalStore {
     async (search) => {
       this._search = search as string;
       this._page = 1;
-      this.getProducts();
+      await this.getProducts();
     }
   );
 
@@ -155,7 +155,7 @@ export default class ProductsStore implements ILocalStore {
     async (category) => {
       this._category = Number(category);
       this._page = 1;
-      this.getProducts();
+      await this.getProducts();
     }
   );
 

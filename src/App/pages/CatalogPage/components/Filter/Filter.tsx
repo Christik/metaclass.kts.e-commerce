@@ -1,8 +1,7 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 
 import Select, { Option } from "@components/Select";
 import CategoryStore from "@store/CategoryStore";
-import { useQueryParamsStoreInit } from "@store/RootStore/hooks/useQueryParamsStoreInit";
 import rootStore from "@store/RootStore/instance";
 import { Meta } from "@utils/meta";
 import { useLocalStore } from "@utils/useLocalStore";
@@ -27,28 +26,31 @@ const createHeader = () => (
 );
 
 const Filter: FC<FilterProps> = ({ className }) => {
-  useQueryParamsStoreInit();
-
   const [searchParams, setSearchParams] = useSearchParams();
-  const [selectedCategory, setSelectedCategory] = useState<string>(
-    rootStore.query.getParam("category") ?? ""
-  );
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   const categoryStore = useLocalStore(() => new CategoryStore());
 
   const isLoading = categoryStore.meta === Meta.loading;
 
-  const onSelectChange = (option: Option | null) => {
-    setSelectedCategory(option?.key ?? "");
+  const onSelectChange = useCallback(
+    (option: Option | null) => {
+      setSelectedCategory(option?.key ?? "");
 
-    if (option?.key) {
-      searchParams.set("category", option.key);
-    } else {
-      searchParams.delete("category");
-    }
+      if (option?.key) {
+        searchParams.set("category", option.key);
+      } else {
+        searchParams.delete("category");
+      }
 
-    setSearchParams(searchParams);
-  };
+      setSearchParams(searchParams);
+    },
+    [searchParams, setSearchParams]
+  );
+
+  useEffect(() => {
+    setSelectedCategory(rootStore.query.getParam("category"));
+  }, []);
 
   useEffect(() => {
     const initCategories = async () => {

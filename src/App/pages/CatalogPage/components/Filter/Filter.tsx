@@ -1,12 +1,15 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 
 import MultiDropdown from "@components/MultiDropdown";
 import { Option } from "@components/MultiDropdown";
 import CategoryStore from "@store/CategoryStore";
+import { useQueryParamsStoreInit } from "@store/RootStore/hooks/useQueryParamsStoreInit";
+import rootStore from "@store/RootStore/instance";
 import { Meta } from "@utils/meta";
 import { useLocalStore } from "@utils/useLocalStore";
 import classnames from "classnames";
 import { observer } from "mobx-react-lite";
+import { useSearchParams } from "react-router-dom";
 
 import styles from "./Filter.module.scss";
 
@@ -28,9 +31,36 @@ const createHeader = (options: Option[]) => (
 );
 
 const Filter: FC<FilterProps> = ({ className }) => {
+  useQueryParamsStoreInit();
+
+  const initialCategories = rootStore.query.getParam("category")
+    ? rootStore.query
+        .getParam("category")
+        .split("-")
+        .map((key) => ({
+          key,
+          value: key,
+        }))
+    : [];
+
+  const [, setSearchParams] = useSearchParams();
+  const [selectedCategories, setSelectedCategories] =
+    useState<Option[]>(initialCategories);
+
   const categoryStore = useLocalStore(() => new CategoryStore());
 
   const isLoading = categoryStore.meta === Meta.loading;
+
+  const onMultiDropdownChange = (options: Option[]) => {
+    setSelectedCategories(options);
+
+    if (options.length > 0) {
+      setSearchParams({ category: options[options.length - 1].key });
+      return;
+    }
+
+    setSearchParams({});
+  };
 
   useEffect(() => {
     const initCategories = async () => {
@@ -51,9 +81,9 @@ const Filter: FC<FilterProps> = ({ className }) => {
         key: String(id),
         value: name,
       }))}
-      value={[]}
+      value={selectedCategories}
       disabled={isLoading}
-      onChange={() => {}}
+      onChange={onMultiDropdownChange}
       pluralizeOptions={createHeader}
     />
   );

@@ -139,10 +139,18 @@ export default class ProductsStore implements ILocalStore {
     }
   };
 
-  private readonly _qpReaction: IReactionDisposer = reaction(
+  private readonly _querySearchReaction: IReactionDisposer = reaction(
     () => rootStore.query.getParam("search"),
     async (search) => {
       this._search = search as string;
+      this.getProducts();
+    }
+  );
+
+  private readonly _queryCategoryReaction: IReactionDisposer = reaction(
+    () => rootStore.query.getParam("category"),
+    async (category) => {
+      this._category = Number(category);
       this.getProducts();
     }
   );

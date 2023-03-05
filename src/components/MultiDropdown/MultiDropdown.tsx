@@ -40,7 +40,7 @@ const MultiDropdown: FC<MultiDropdownProps> = (props) => {
         return updatedOptions;
       }
 
-      onChange([option]);
+      onChange([...prevSelectedOptions, option]);
       return [...prevSelectedOptions, option];
     });
   };

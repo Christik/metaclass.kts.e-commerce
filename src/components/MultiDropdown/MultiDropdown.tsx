@@ -1,4 +1,4 @@
-import { FC, useEffect, useId, useState } from "react";
+import { FC, ReactNode, useEffect, useId, useState } from "react";
 
 import classnames from "classnames";
 
@@ -10,15 +10,17 @@ export type Option = {
 };
 
 export type MultiDropdownProps = {
+  className?: string;
   options: Option[];
   value: Option[];
   onChange: (value: Option[]) => void;
   disabled?: boolean;
-  pluralizeOptions: (value: Option[]) => string;
+  pluralizeOptions: (value: Option[]) => string | ReactNode;
 };
 
 const MultiDropdown: FC<MultiDropdownProps> = (props) => {
-  const { options, value, disabled, pluralizeOptions, onChange } = props;
+  const { className, options, value, disabled, pluralizeOptions, onChange } =
+    props;
   const id = useId();
   const [isOpened, setIsOpened] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState(value);
@@ -48,7 +50,7 @@ const MultiDropdown: FC<MultiDropdownProps> = (props) => {
   useEffect(() => setIsOpened(false), [disabled]);
 
   return (
-    <div className={styles["multi-dropdown"]}>
+    <div className={classnames(styles["multi-dropdown"], className)}>
       <button
         type="button"
         className={classnames(styles.header, {

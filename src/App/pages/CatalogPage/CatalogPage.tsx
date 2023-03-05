@@ -3,6 +3,7 @@ import Title, { TitleSize } from "@components/Title";
 
 import styles from "./CatalogPage.module.scss";
 import Catalog from "./components/Catalog";
+import Filter from "./components/Filter";
 import Search from "./components/Search";
 
 const CatalogPage = () => {
@@ -16,7 +17,10 @@ const CatalogPage = () => {
         </Text>
       </header>
 
-      <Search className={styles.search} />
+      <div className={styles.panel}>
+        <Search />
+        <Filter className={styles.filter} />
+      </div>
 
       <Catalog />
     </>

@@ -17,9 +17,24 @@
 }
 
 /*=========================
-  Search
+  Panel
 ===========================*/
 
-.search {
+.panel {
+  display: flex;
+  gap: 30px;
   margin-bottom: 50px;
+
+  @media #{$mobile} {
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 30px;
+  }
+}
+
+.filter {
+  flex-shrink: 0;
+  width: 190px;
+
+  @media #{$mobile} { width: 100%; }
 }

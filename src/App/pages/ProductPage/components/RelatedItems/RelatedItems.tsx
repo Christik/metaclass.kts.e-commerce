@@ -1,6 +1,7 @@
 import { FC, useEffect } from "react";
 
 import CardList from "@components/CardList";
+import InfoMessage from "@components/InfoMessage";
 import Loader, { LoaderPosition } from "@components/Loader";
 import Title, { TitleSize } from "@components/Title";
 import { CategoryModel } from "@store/models/product";
@@ -22,6 +23,7 @@ const RelatedItems: FC<RelatedItemsProps> = ({ className, category }) => {
   const productsStore = useLocalStore(() => new ProductsStore());
 
   const isLoading = productsStore.meta === Meta.loading;
+  const isError = productsStore.meta === Meta.error;
   const isSuccess = productsStore.meta === Meta.success;
 
   const { id } = category;
@@ -43,6 +45,8 @@ const RelatedItems: FC<RelatedItemsProps> = ({ className, category }) => {
       </Title>
 
       {isLoading && <Loader position={LoaderPosition.centered} />}
+
+      {isError && <InfoMessage>Oops. Something went wrong.</InfoMessage>}
 
       {isSuccess && <CardList cards={productsStore.list} />}
     </section>

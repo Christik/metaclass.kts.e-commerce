@@ -2,6 +2,7 @@ import { useCallback, useEffect } from "react";
 
 import Badge from "@components/Badge";
 import CardList from "@components/CardList";
+import InfoMessage from "@components/InfoMessage";
 import Loader, { LoaderPosition } from "@components/Loader";
 import Pagination from "@components/Pagination";
 import Title from "@components/Title";
@@ -19,6 +20,8 @@ const Catalog = () => {
 
   const isLoading = productsStore.meta === Meta.loading;
   const isSuccess = productsStore.meta === Meta.success;
+  const isError = productsStore.meta === Meta.error;
+  const isEmpty = isSuccess && productsStore.list.length === 0;
 
   const onPageChange = useCallback(
     (page: number) => {
@@ -49,19 +52,25 @@ const Catalog = () => {
         {isSuccess && <Badge>{productsStore.count}</Badge>}
       </header>
 
-      {isLoading ? (
-        <Loader position={LoaderPosition.centered} />
-      ) : (
-        <CardList cards={productsStore.list} />
+      {isLoading && <Loader position={LoaderPosition.centered} />}
+
+      {isError && <InfoMessage>Oops. Something went wrong.</InfoMessage>}
+
+      {isSuccess && (
+        <>
+          <CardList cards={productsStore.list} />
+
+          <Pagination
+            className={styles.pagination}
+            length={productsStore.count}
+            limit={productsStore.limit}
+            current={productsStore.page}
+            onChange={onPageChange}
+          />
+        </>
       )}
 
-      <Pagination
-        className={styles.pagination}
-        length={productsStore.count}
-        limit={productsStore.limit}
-        current={productsStore.page}
-        onChange={onPageChange}
-      />
+      {isEmpty && <InfoMessage>No results</InfoMessage>}
     </section>
   );
 };

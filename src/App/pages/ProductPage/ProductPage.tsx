@@ -16,11 +16,9 @@ import NotFoundPage from "../NotFoundPage";
 const ProductPage = () => {
   const productDetailStore = useLocalStore(() => new ProductDetailStore());
 
-  const isProductLoading = productDetailStore.meta === Meta.loading;
-  const isProductError = productDetailStore.meta === Meta.error;
-  const isProductSuccess =
-    productDetailStore.meta === Meta.success &&
-    productDetailStore.product !== null;
+  const isLoading = productDetailStore.meta === Meta.loading;
+  const isError = productDetailStore.meta === Meta.error;
+  const isSuccess = productDetailStore.meta === Meta.success;
 
   const { id } = useParams<{ id: string }>();
 
@@ -36,11 +34,11 @@ const ProductPage = () => {
 
   return (
     <>
-      {isProductError && <NotFoundPage />}
+      {isError && <NotFoundPage />}
 
-      {isProductLoading && <Loader position={LoaderPosition.centered} />}
+      {isLoading && <Loader position={LoaderPosition.centered} />}
 
-      {isProductSuccess && (
+      {isSuccess && (
         <>
           <div className={styles.content}>
             <Gallery

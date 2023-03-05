@@ -1,6 +1,10 @@
 import { API_BASE_URL, API_ENDPOINTS } from "@config/api";
 import ApiStore from "@store/ApiStore";
-import { normalizeProduct, ProductModel } from "@store/models/product";
+import {
+  getInitialProductModel,
+  normalizeProduct,
+  ProductModel,
+} from "@store/models/product";
 import { Meta } from "@utils/meta";
 import { ILocalStore } from "@utils/useLocalStore";
 import {
@@ -16,7 +20,7 @@ type PrivateFields = "_product" | "_meta";
 export default class ProductDetailStore implements ILocalStore {
   private readonly _apiStore = new ApiStore(API_BASE_URL);
 
-  private _product: ProductModel | null = null;
+  private _product: ProductModel = getInitialProductModel();
   private _meta: Meta = Meta.initial;
 
   constructor() {
@@ -29,7 +33,7 @@ export default class ProductDetailStore implements ILocalStore {
     });
   }
 
-  get product(): ProductModel | null {
+  get product(): ProductModel {
     return this._product;
   }
 
@@ -38,8 +42,8 @@ export default class ProductDetailStore implements ILocalStore {
   }
 
   async getProductDetail(id: string) {
-    this._product = null;
     this._meta = Meta.loading;
+    this._product = getInitialProductModel();
 
     try {
       const url = `${API_ENDPOINTS.PRODUCTS}${id}`;
@@ -50,6 +54,7 @@ export default class ProductDetailStore implements ILocalStore {
         this._meta = Meta.success;
       });
     } catch (error) {
+      this._product = getInitialProductModel();
       this._meta = Meta.error;
     }
   }

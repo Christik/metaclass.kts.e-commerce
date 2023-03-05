@@ -42,7 +42,9 @@ export default class ProductsStore implements ILocalStore {
   private _page: number = 1;
   private _limit: number = 0;
   private _offset: number = 0;
-  private _category: number | null = null;
+  private _category: number | null = rootStore.query.getParam("category")
+    ? Number(rootStore.query.getParam("category"))
+    : null;
   private _search: string = rootStore.query.getParam("search");
   private _meta: Meta = Meta.initial;
 
@@ -143,6 +145,7 @@ export default class ProductsStore implements ILocalStore {
     () => rootStore.query.getParam("search"),
     async (search) => {
       this._search = search as string;
+      this._page = 1;
       this.getProducts();
     }
   );
@@ -151,6 +154,7 @@ export default class ProductsStore implements ILocalStore {
     () => rootStore.query.getParam("category"),
     async (category) => {
       this._category = Number(category);
+      this._page = 1;
       this.getProducts();
     }
   );

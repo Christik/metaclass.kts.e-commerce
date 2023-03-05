@@ -16,7 +16,7 @@ type SearchProps = {
 const Search: FC<SearchProps> = ({ className }) => {
   useQueryParamsStoreInit();
 
-  const [, setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [search, setSearch] = useState(
     rootStore.query.getParam("search") ?? ""
   );
@@ -25,11 +25,12 @@ const Search: FC<SearchProps> = ({ className }) => {
     evt.preventDefault();
 
     if (search) {
-      setSearchParams({ search: search });
-      return;
+      searchParams.set("search", search);
+    } else {
+      searchParams.delete("search");
     }
 
-    setSearchParams({});
+    setSearchParams(searchParams);
   };
 
   return (

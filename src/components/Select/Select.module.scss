@@ -4,7 +4,7 @@
   Multi Dropdown
 ===========================*/
 
-.multi-dropdown {
+.select {
   position: relative;
 }
 
@@ -61,6 +61,7 @@
 
   &_selected {
     color: $accent-text-color;
+    font-weight: 700;
   }
 }
 

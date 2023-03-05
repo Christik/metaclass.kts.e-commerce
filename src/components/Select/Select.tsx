@@ -2,55 +2,63 @@ import { FC, ReactNode, useEffect, useId, useState } from "react";
 
 import classnames from "classnames";
 
-import styles from "./MultiDropdown.module.scss";
+import styles from "./Select.module.scss";
 
 export type Option = {
   key: string;
   value: string;
 };
 
-export type MultiDropdownProps = {
+export type SelectProps = {
   className?: string;
   options: Option[];
-  value: Option[];
-  onChange: (value: Option[]) => void;
+  value: string;
+  onChange: (value: Option | null) => void;
   disabled?: boolean;
-  pluralizeOptions: (value: Option[]) => string | ReactNode;
+  pluralizeOptions: (value: Option | null) => string | ReactNode;
 };
 
-const MultiDropdown: FC<MultiDropdownProps> = (props) => {
+const getOptionByKey = (keyValue: string, options: Option[]) => {
+  const option = options.find(({ key }) => key === keyValue);
+  return option ?? null;
+};
+
+const Select: FC<SelectProps> = (props) => {
   const { className, options, value, disabled, pluralizeOptions, onChange } =
     props;
   const id = useId();
   const [isOpened, setIsOpened] = useState(false);
-  const [selectedOptions, setSelectedOptions] = useState(value);
+  const [selectedOption, setSelectedOption] = useState(
+    getOptionByKey(value, options)
+  );
 
   const handleClick = () => {
     setIsOpened((prevState) => !prevState);
   };
 
   const handleCheckboxChange = (option: Option) => {
-    setSelectedOptions((prevSelectedOptions) => {
-      if (prevSelectedOptions.some(({ key }) => key === option.key)) {
-        const updatedOptions = prevSelectedOptions.filter(
-          ({ key }) => key !== option.key
-        );
+    setIsOpened(false);
 
-        onChange(updatedOptions);
-        return updatedOptions;
-      }
+    if (option.key === selectedOption?.key) {
+      setSelectedOption(null);
+      onChange(null);
 
-      onChange([...prevSelectedOptions, option]);
-      return [...prevSelectedOptions, option];
-    });
+      return;
+    }
+
+    setSelectedOption(option);
+    onChange(option);
   };
 
-  useEffect(() => setSelectedOptions(value), [value]);
+  useEffect(
+    () => setSelectedOption(getOptionByKey(value, options)),
+    [options, value]
+  );
 
   useEffect(() => setIsOpened(false), [disabled]);
 
   return (
-    <div className={classnames(styles["multi-dropdown"], className)}>
+    <div className={classnames(styles.select, className)}>
       <button
         type="button"
         className={classnames(styles.header, {
@@ -59,15 +67,13 @@ const MultiDropdown: FC<MultiDropdownProps> = (props) => {
         disabled={disabled}
         onClick={handleClick}
       >
-        {pluralizeOptions(selectedOptions)}
+        {pluralizeOptions(selectedOption)}
       </button>
 
       {isOpened && (
         <ul className={styles.list}>
           {options.map((option, index) => {
-            const isChecked = selectedOptions.some(
-              ({ key }) => key === option.key
-            );
+            const isChecked = option.key === selectedOption?.key;
 
             return (
               <li key={option.key} className={styles.option}>
@@ -96,4 +102,4 @@ const MultiDropdown: FC<MultiDropdownProps> = (props) => {
   );
 };
 
-export default MultiDropdown;
+export default Select;

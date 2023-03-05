@@ -23,6 +23,8 @@
     stroke-miterlimit: 10;
     stroke-linecap: round;
     stroke-linejoin: round;
+
+    .filter_disabled & { stroke: $secondary-text-color; }
   }
 
   @media #{$mobile} {

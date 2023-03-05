@@ -1,8 +1,12 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 
 import MultiDropdown from "@components/MultiDropdown";
 import { Option } from "@components/MultiDropdown";
+import CategoryStore from "@store/CategoryStore";
+import { Meta } from "@utils/meta";
+import { useLocalStore } from "@utils/useLocalStore";
 import classnames from "classnames";
+import { observer } from "mobx-react-lite";
 
 import styles from "./Filter.module.scss";
 
@@ -24,19 +28,35 @@ const createHeader = (options: Option[]) => (
 );
 
 const Filter: FC<FilterProps> = ({ className }) => {
+  const categoryStore = useLocalStore(() => new CategoryStore());
+
+  const isLoading = categoryStore.meta === Meta.loading;
+
+  useEffect(() => {
+    const initCategories = async () => {
+      await categoryStore.getCategories();
+    };
+
+    initCategories();
+  }, [categoryStore]);
+
   return (
     <MultiDropdown
-      className={classnames(styles.filter, className)}
-      options={[
-        { key: "0", value: "Handmade Fresh Table" },
-        { key: "1", value: "Change title" },
-        { key: "2", value: "Clothes" },
-      ]}
-      value={[{ key: "msk", value: "Москва" }]}
+      className={classnames(
+        styles.filter,
+        { [styles["filter_disabled"]]: isLoading },
+        className
+      )}
+      options={categoryStore.list.map(({ id, name }) => ({
+        key: String(id),
+        value: name,
+      }))}
+      value={[]}
+      disabled={isLoading}
       onChange={() => {}}
       pluralizeOptions={createHeader}
     />
   );
 };
 
-export default Filter;
+export default observer(Filter);

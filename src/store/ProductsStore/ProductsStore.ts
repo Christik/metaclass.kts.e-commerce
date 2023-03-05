@@ -39,14 +39,16 @@ export default class ProductsStore implements ILocalStore {
   private _list: CollectionModel<number, ProductModel> =
     getInitialCollectionModel();
   private _count: number = 0;
-  private _page: number = 1;
   private _limit: number = 0;
   private _offset: number = 0;
+  private _meta: Meta = Meta.initial;
+  private _search: string = rootStore.query.getParam("search");
+  private _page: number = rootStore.query.getParam("page")
+    ? Number(rootStore.query.getParam("page"))
+    : 1;
   private _category: number | null = rootStore.query.getParam("category")
     ? Number(rootStore.query.getParam("category"))
     : null;
-  private _search: string = rootStore.query.getParam("search");
-  private _meta: Meta = Meta.initial;
 
   constructor() {
     makeObservable<ProductsStore, PrivateFields>(this, {
@@ -92,13 +94,18 @@ export default class ProductsStore implements ILocalStore {
     return this._meta;
   }
 
+  private _setOffset = () => {
+    this._offset = this._page * this._limit - this._limit;
+  };
+
   setPage = (page: number) => {
     this._page = page;
-    this._offset = this._page * this._limit - this._limit;
+    this._setOffset();
   };
 
   setLimit = (limit: number) => {
     this._limit = limit;
+    this._setOffset();
   };
 
   setCategory = (id: number | null) => {
@@ -116,7 +123,7 @@ export default class ProductsStore implements ILocalStore {
     return response.data;
   }
 
-  getProducts = async () => {
+  async getProducts() {
     this._list = getInitialCollectionModel();
     this._meta = Meta.loading;
 
@@ -139,13 +146,13 @@ export default class ProductsStore implements ILocalStore {
       this._list = getInitialCollectionModel();
       this._meta = Meta.error;
     }
-  };
+  }
 
   private readonly _querySearchReaction: IReactionDisposer = reaction(
     () => rootStore.query.getParam("search"),
     async (search) => {
       this._search = search as string;
-      this._page = 1;
+      this.setPage(1);
       await this.getProducts();
     }
   );
@@ -154,8 +161,18 @@ export default class ProductsStore implements ILocalStore {
     () => rootStore.query.getParam("category"),
     async (category) => {
       this._category = Number(category);
-      this._page = 1;
+      this.setPage(1);
       await this.getProducts();
+    }
+  );
+
+  private readonly _queryPageReaction: IReactionDisposer = reaction(
+    () => rootStore.query.getParam("page"),
+    async (page) => {
+      if (page) {
+        this.setPage(Number(page));
+        await this.getProducts();
+      }
     }
   );
 

@@ -10,12 +10,15 @@ import ProductsStore from "@store/ProductsStore";
 import { Meta } from "@utils/meta";
 import { useLocalStore } from "@utils/useLocalStore";
 import { observer } from "mobx-react-lite";
+import { useSearchParams } from "react-router-dom";
 
 import styles from "./Catalog.module.scss";
 
 const LIMIT = 9;
 
 const Catalog = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const productsStore = useLocalStore(() => new ProductsStore());
 
   const isLoading = productsStore.meta === Meta.loading;
@@ -25,15 +28,11 @@ const Catalog = () => {
 
   const onPageChange = useCallback(
     (page: number) => {
-      const updateProducts = async () => {
-        window.scrollTo(0, 0);
-        productsStore.setPage(page);
-        await productsStore.getProducts();
-      };
-
-      updateProducts();
+      window.scrollTo(0, 0);
+      searchParams.set("page", String(page));
+      setSearchParams(searchParams);
     },
-    [productsStore]
+    [searchParams, setSearchParams]
   );
 
   useEffect(() => {

@@ -35,15 +35,15 @@ const Filter: FC<FilterProps> = ({ className }) => {
 
   const onSelectChange = useCallback(
     (option: Option | null) => {
-      setSelectedCategory(option?.key ?? "");
-
       if (option?.key) {
         searchParams.set("category", option.key);
       } else {
         searchParams.delete("category");
       }
 
+      searchParams.delete("page");
       setSearchParams(searchParams);
+      setSelectedCategory(option?.key ?? "");
     },
     [searchParams, setSearchParams]
   );

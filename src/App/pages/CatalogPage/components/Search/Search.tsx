@@ -38,6 +38,7 @@ const Search: FC<SearchProps> = ({ className }) => {
         searchParams.delete("search");
       }
 
+      searchParams.delete("page");
       setSearchParams(searchParams);
     },
     [search, searchParams, setSearchParams]

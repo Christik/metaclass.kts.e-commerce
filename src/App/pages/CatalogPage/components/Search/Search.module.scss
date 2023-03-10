@@ -17,12 +17,21 @@
   }
 }
 
+/*=========================
+  Icon
+===========================*/
+
+@mixin icon-size($size) {
+  width: $size;
+  height: $size;
+}
+
 .icon {
+  @include icon-size(32px);
+
   order: -1;
   margin-right: 18px;
   display: block;
-  width: 32px;
-  height: 32px;
   fill: none;
 
   path {
@@ -33,12 +42,16 @@
   }
 
   @media #{$mobile} {
+    @include icon-size(24px);
+
     margin-left: 6px;
     margin-right: 12px;
-    width: 24px;
-    height: 24px;
   }
 }
+
+/*=========================
+  Input
+===========================*/
 
 .input {
   flex-grow: 1;
@@ -60,6 +73,10 @@
     stroke: $accent-text-color;
   }
 }
+
+/*=========================
+  Button
+===========================*/
 
 .button {
   flex-shrink: 0;

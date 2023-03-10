@@ -21,21 +21,25 @@ import {
   action,
 } from "mobx";
 
-type PrivateFields = "_list" | "_meta";
+type PrivateFields = "_list" | "_current" | "_meta";
 
 export default class CategoryStore implements ILocalStore {
   private readonly _apiStore = new ApiStore(API_BASE_URL);
 
   private _list: CollectionModel<number, CategoryModel> =
     getInitialCollectionModel();
+  private _current: CategoryModel | null = null;
   private _meta: Meta = Meta.initial;
 
   constructor() {
     makeObservable<CategoryStore, PrivateFields>(this, {
       _list: observable.ref,
+      _current: observable,
       _meta: observable,
       list: computed,
+      current: computed,
       meta: computed,
+      setCurrent: action,
       getCategories: action,
     });
   }
@@ -44,8 +48,16 @@ export default class CategoryStore implements ILocalStore {
     return linearizeCollection(this._list);
   }
 
+  get current(): CategoryModel | null {
+    return this._current;
+  }
+
   get meta(): Meta {
     return this._meta;
+  }
+
+  setCurrent(id: number | null): void {
+    this._current = id === null ? id : this._list.entities[id];
   }
 
   async getCategories(): Promise<void> {

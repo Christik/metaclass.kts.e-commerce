@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect, useMemo, useState } from "react";
+import { FC, useCallback, useEffect, useMemo } from "react";
 
 import Select, { Option } from "@components/Select";
 import CategoryStore from "@store/CategoryStore";
@@ -29,7 +29,6 @@ type FilterProps = {
 
 const Filter: FC<FilterProps> = ({ className }) => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [selectedCategory, setSelectedCategory] = useState("");
 
   const categoryStore = useLocalStore(() => new CategoryStore());
 
@@ -52,17 +51,18 @@ const Filter: FC<FilterProps> = ({ className }) => {
 
       searchParams.delete("page");
       setSearchParams(searchParams);
-      setSelectedCategory(option?.key ?? "");
+      categoryStore.setCurrent(option ? Number(option.key) : null);
     },
-    [searchParams, setSearchParams]
+    [categoryStore, searchParams, setSearchParams]
   );
 
   useEffect(() => {
-    setSelectedCategory(rootStore.query.getParam("category"));
-  }, []);
+    categoryStore.getCategories();
+  }, [categoryStore]);
 
   useEffect(() => {
-    categoryStore.getCategories();
+    const id = Number(rootStore.query.getParam("category"));
+    categoryStore.setCurrent(id);
   }, [categoryStore]);
 
   return (
@@ -73,7 +73,7 @@ const Filter: FC<FilterProps> = ({ className }) => {
         className
       )}
       options={options}
-      value={selectedCategory}
+      value={rootStore.query.getParam("category") ?? ""}
       disabled={isLoading}
       onChange={onSelectChange}
       pluralizeOptions={() => <FilterHeader />}

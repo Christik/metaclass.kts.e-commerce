@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { FC, useEffect } from "react";
 
 import Loader, { LoaderPosition } from "@components/Loader";
 import ProductDetailStore from "@store/ProductDetailStore";
@@ -13,7 +13,7 @@ import RelatedItems from "./components/RelatedItems";
 import styles from "./ProductPage.module.scss";
 import NotFoundPage from "../NotFoundPage";
 
-const ProductPage = () => {
+const ProductPage: FC = () => {
   const productDetailStore = useLocalStore(() => new ProductDetailStore());
 
   const isLoading = productDetailStore.meta === Meta.loading;
@@ -23,12 +23,8 @@ const ProductPage = () => {
   const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
-    const initProduct = async (id: string) => {
-      await productDetailStore.getProductDetail(String(id));
-    };
-
     if (id) {
-      initProduct(id);
+      productDetailStore.getProductDetail(String(id));
     }
   }, [id, productDetailStore]);
 

@@ -3,6 +3,7 @@ import ApiStore from "@store/ApiStore";
 import {
   getInitialProductModel,
   normalizeProduct,
+  ProductApi,
   ProductModel,
 } from "@store/models/product";
 import { Meta } from "@utils/meta";
@@ -41,16 +42,16 @@ export default class ProductDetailStore implements ILocalStore {
     return this._meta;
   }
 
-  async getProductDetail(id: string) {
+  async getProductDetail(id: string): Promise<void> {
     this._meta = Meta.loading;
     this._product = getInitialProductModel();
 
     try {
       const url = `${API_ENDPOINTS.PRODUCTS}${id}`;
-      const response = await this._apiStore.request(url);
+      const data = await this._apiStore.request<ProductApi>(url);
 
       runInAction(() => {
-        this._product = normalizeProduct(response.data);
+        this._product = normalizeProduct(data);
         this._meta = Meta.success;
       });
     } catch (error) {

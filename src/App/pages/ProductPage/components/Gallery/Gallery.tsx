@@ -1,7 +1,8 @@
-import { FC, useRef, memo } from "react";
+import { FC, useRef, memo, useCallback } from "react";
 
 import classnames from "classnames";
 import { Navigation } from "swiper";
+import type { Swiper as SwiperType } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { NavigationOptions } from "swiper/types";
 
@@ -21,6 +22,13 @@ const Gallery: FC<GalleryProps> = ({ className, images, alt }) => {
 
   const hasNavigation = images.length > 1;
 
+  const onBeforeInit = useCallback(({ params: { navigation } }: SwiperType) => {
+    if (navigation) {
+      (navigation as NavigationOptions).prevEl = navigationPrevRef.current;
+      (navigation as NavigationOptions).nextEl = navigationNextRef.current;
+    }
+  }, []);
+
   return (
     <div className={classnames(styles.gallery, className)}>
       <Swiper
@@ -32,12 +40,7 @@ const Gallery: FC<GalleryProps> = ({ className, images, alt }) => {
           prevEl: navigationPrevRef.current,
           nextEl: navigationNextRef.current,
         }}
-        onBeforeInit={(swiper) => {
-          (swiper.params.navigation as NavigationOptions).prevEl =
-            navigationPrevRef.current;
-          (swiper.params.navigation as NavigationOptions).nextEl =
-            navigationNextRef.current;
-        }}
+        onBeforeInit={onBeforeInit}
       >
         {images.map((image) => (
           <SwiperSlide key={image}>

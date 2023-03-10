@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { FC, useCallback, useEffect } from "react";
 
 import Badge from "@components/Badge";
 import CardList from "@components/CardList";
@@ -16,10 +16,10 @@ import styles from "./Catalog.module.scss";
 
 const LIMIT = 9;
 
-const Catalog = () => {
+const Catalog: FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const productsStore = useLocalStore(() => new ProductsStore());
+  const productsStore = useLocalStore(() => new ProductsStore(LIMIT));
 
   const isLoading = productsStore.meta === Meta.loading;
   const isSuccess = productsStore.meta === Meta.success;
@@ -36,12 +36,7 @@ const Catalog = () => {
   );
 
   useEffect(() => {
-    const initProducts = async () => {
-      productsStore.setLimit(LIMIT);
-      await productsStore.getProducts();
-    };
-
-    initProducts();
+    productsStore.getProducts();
   }, [productsStore]);
 
   return (
@@ -61,7 +56,7 @@ const Catalog = () => {
 
           <Pagination
             className={styles.pagination}
-            length={productsStore.count}
+            length={productsStore.count as number}
             limit={productsStore.limit}
             current={productsStore.page}
             onChange={onPageChange}

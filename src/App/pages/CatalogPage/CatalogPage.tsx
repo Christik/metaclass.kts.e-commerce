@@ -1,3 +1,5 @@
+import { FC } from "react";
+
 import Text from "@components/Text";
 import Title, { TitleSize } from "@components/Title";
 
@@ -6,7 +8,7 @@ import Catalog from "./components/Catalog";
 import Filter from "./components/Filter";
 import Search from "./components/Search";
 
-const CatalogPage = () => {
+const CatalogPage: FC = () => {
   return (
     <>
       <header className={styles.header}>

@@ -1,6 +1,10 @@
 import { API_BASE_URL, API_ENDPOINTS } from "@config/api";
 import ApiStore from "@store/ApiStore";
-import { CategoryModel, normalizeCategory } from "@store/models/product";
+import {
+  CategoryApi,
+  CategoryModel,
+  normalizeCategory,
+} from "@store/models/product";
 import {
   CollectionModel,
   getInitialCollectionModel,
@@ -36,24 +40,26 @@ export default class CategoryStore implements ILocalStore {
     });
   }
 
-  get list() {
+  get list(): CategoryModel[] {
     return linearizeCollection(this._list);
   }
 
-  get meta() {
+  get meta(): Meta {
     return this._meta;
   }
 
-  async getCategories() {
+  async getCategories(): Promise<void> {
     this._meta = Meta.loading;
     this._list = getInitialCollectionModel();
 
     try {
-      const response = await this._apiStore.request(API_ENDPOINTS.CATEGORIES);
+      const data = await this._apiStore.request<CategoryApi[]>(
+        API_ENDPOINTS.CATEGORIES
+      );
 
       runInAction(() => {
         this._list = normalizeCollection(
-          response.data,
+          data,
           (element) => element.id,
           normalizeCategory
         );

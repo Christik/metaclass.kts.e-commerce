@@ -1,3 +1,5 @@
+import { FC } from "react";
+
 import Layout from "@components/Layout";
 import { ROUTS } from "@config/routs";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -6,7 +8,7 @@ import CatalogPage from "./pages/CatalogPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import ProductPage from "./pages/ProductPage";
 
-const App = () => {
+const App: FC = () => {
   return (
     <BrowserRouter>
       <Routes>

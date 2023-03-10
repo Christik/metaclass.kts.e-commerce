@@ -1,4 +1,4 @@
-import { FC, ReactNode, useEffect, useId, useState } from "react";
+import { FC, ReactNode, useCallback, useEffect, useId, useState } from "react";
 
 import classnames from "classnames";
 
@@ -32,23 +32,26 @@ const Select: FC<SelectProps> = (props) => {
     getOptionByKey(value, options)
   );
 
-  const handleClick = () => {
+  const handleClick = useCallback(() => {
     setIsOpened((prevState) => !prevState);
-  };
+  }, []);
 
-  const handleCheckboxChange = (option: Option) => {
-    setIsOpened(false);
+  const handleCheckboxChange = useCallback(
+    (option: Option) => {
+      setIsOpened(false);
 
-    if (option.key === selectedOption?.key) {
-      setSelectedOption(null);
-      onChange(null);
+      if (option.key === selectedOption?.key) {
+        setSelectedOption(null);
+        onChange(null);
 
-      return;
-    }
+        return;
+      }
 
-    setSelectedOption(option);
-    onChange(option);
-  };
+      setSelectedOption(option);
+      onChange(option);
+    },
+    [onChange, selectedOption?.key]
+  );
 
   useEffect(
     () => setSelectedOption(getOptionByKey(value, options)),

@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 
 export default class ApiStore {
   private _baseUrl: string | null = null;
@@ -7,7 +7,10 @@ export default class ApiStore {
     this._baseUrl = baseUrl;
   }
 
-  async request(endpoint: string) {
-    return await axios.get(`${this._baseUrl}${endpoint}`);
+  async request<T>(endpoint: string): Promise<T> {
+    const response: AxiosResponse<T> = await axios.get(
+      `${this._baseUrl}${endpoint}`
+    );
+    return response.data;
   }
 }

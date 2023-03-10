@@ -20,7 +20,7 @@ type RelatedItemsProps = {
 const LIMIT = 3;
 
 const RelatedItems: FC<RelatedItemsProps> = ({ className, category }) => {
-  const productsStore = useLocalStore(() => new ProductsStore());
+  const productsStore = useLocalStore(() => new ProductsStore(LIMIT));
 
   const isLoading = productsStore.meta === Meta.loading;
   const isError = productsStore.meta === Meta.error;
@@ -29,13 +29,8 @@ const RelatedItems: FC<RelatedItemsProps> = ({ className, category }) => {
   const { id } = category;
 
   useEffect(() => {
-    const initProducts = async () => {
-      productsStore.setLimit(LIMIT);
-      productsStore.setCategory(id);
-      await productsStore.getProducts();
-    };
-
-    initProducts();
+    productsStore.setCategory(id);
+    productsStore.getProducts();
   }, [id, productsStore]);
 
   return (

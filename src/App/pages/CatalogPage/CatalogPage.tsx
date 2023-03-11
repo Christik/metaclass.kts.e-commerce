@@ -1,10 +1,14 @@
+import { FC } from "react";
+
 import Text from "@components/Text";
 import Title, { TitleSize } from "@components/Title";
 
 import styles from "./CatalogPage.module.scss";
 import Catalog from "./components/Catalog";
+import Filter from "./components/Filter";
+import Search from "./components/Search";
 
-const CatalogPage = () => {
+const CatalogPage: FC = () => {
   return (
     <>
       <header className={styles.header}>
@@ -14,6 +18,11 @@ const CatalogPage = () => {
           to see our old products please enter the name of the item
         </Text>
       </header>
+
+      <div className={styles.panel}>
+        <Search />
+        <Filter className={styles.filter} />
+      </div>
 
       <Catalog />
     </>

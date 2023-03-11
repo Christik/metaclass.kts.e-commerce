@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { FC, useEffect } from "react";
 
 import Loader, { LoaderPosition } from "@components/Loader";
-import { Product } from "@config/types";
-import { getProduct } from "@store/product";
-import { getProductsByCategory } from "@store/products";
+import ProductDetailStore from "@store/ProductDetailStore";
+import { Meta } from "@utils/meta";
+import { useLocalStore } from "@utils/useLocalStore";
+import { observer } from "mobx-react-lite";
 import { useParams } from "react-router-dom";
 
 import Gallery from "./components/Gallery";
@@ -12,70 +13,51 @@ import RelatedItems from "./components/RelatedItems";
 import styles from "./ProductPage.module.scss";
 import NotFoundPage from "../NotFoundPage";
 
-const RELATED_LIMIT = 3;
+const ProductPage: FC = () => {
+  const productDetailStore = useLocalStore(() => new ProductDetailStore());
 
-const ProductPage = () => {
-  const [product, setProduct] = useState<Product | null>(null);
-  const [relatedProducts, setRelatedProducts] = useState<Product[] | null>(
-    null
-  );
-  const [isError, setIsError] = useState<boolean>(false);
+  const isLoading = productDetailStore.meta === Meta.loading;
+  const isError = productDetailStore.meta === Meta.error;
+  const isSuccess = productDetailStore.meta === Meta.success;
 
   const { id } = useParams<{ id: string }>();
-  const productId = Number(id);
-  const isLoading = product === null || relatedProducts === null;
 
   useEffect(() => {
-    const initProduct = async (id: number) => {
-      try {
-        const data = await getProduct(id);
-        setProduct(data);
-      } catch (error) {
-        setIsError(true);
-      }
-    };
-
-    initProduct(productId);
-  }, [productId]);
-
-  useEffect(() => {
-    if (product) {
-      const initRelatedProducts = async () => {
-        const data = await getProductsByCategory(
-          product.category.id,
-          RELATED_LIMIT
-        );
-        setRelatedProducts(data);
-      };
-
-      initRelatedProducts();
+    if (id) {
+      productDetailStore.getProductDetail(String(id));
     }
-  }, [product]);
-
-  if (isError) {
-    return <NotFoundPage />;
-  }
-
-  if (isLoading) {
-    return <Loader position={LoaderPosition.centered} />;
-  }
-
-  const { title, description, price, images } = product;
+  }, [id, productDetailStore]);
 
   return (
     <>
-      <div className={styles.content}>
-        <Gallery className={styles.gallery} images={images} alt={title} />
+      {isError && <NotFoundPage />}
 
-        <Info title={title} description={description} price={price} />
-      </div>
+      {isLoading && <Loader position={LoaderPosition.centered} />}
 
-      <RelatedItems
-        className={styles["related-items"]}
-        products={relatedProducts}
-      />
+      {isSuccess && (
+        <>
+          <div className={styles.content}>
+            <Gallery
+              className={styles.gallery}
+              images={productDetailStore.product.images}
+              alt={productDetailStore.product.title}
+            />
+
+            <Info
+              title={productDetailStore.product.title}
+              description={productDetailStore.product.description}
+              price={productDetailStore.product.price}
+            />
+          </div>
+
+          <RelatedItems
+            className={styles["related-items"]}
+            category={productDetailStore.product.category}
+          />
+        </>
+      )}
     </>
   );
 };
 
-export default ProductPage;
+export default observer(ProductPage);

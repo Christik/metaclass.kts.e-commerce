@@ -1,11 +1,11 @@
-import { memo } from "react";
+import { FC, memo } from "react";
 
 import Text from "@components/Text";
 import Title, { TitleSize } from "@components/Title";
 
 import styles from "./NotFoundPage.module.scss";
 
-const NotFoundPage = () => {
+const NotFoundPage: FC = () => {
   return (
     <>
       <Title className={styles.title} size={TitleSize.l}>

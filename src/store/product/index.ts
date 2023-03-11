@@ -1,1 +1,0 @@
-export { getProduct } from "./getProduct";

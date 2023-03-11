@@ -16,14 +16,11 @@ $inverted-text-color: $primary-bg-color;
 $primary-border-color: #f3f3f3;
 $accent-border-color: $accent-bg-color;
 
-$shadow-color: $secondary-text-color;
-
 /*=========================
   Shadows
 ===========================*/
 
-$primary-shadow: 0px 4px 120px rgba($shadow-color, 15%);
-$secondary-shadow: 0px 4px 120px $shadow-color;
+$primary-shadow: 0px 4px 20px rgba(175, 173, 181, 0.2);
 
 /*=========================
   Fonts

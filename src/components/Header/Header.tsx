@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { FC, memo } from "react";
 
 import { ROUTS } from "@config/routs";
 import logo from "@static/img/logo.svg";
@@ -6,7 +6,7 @@ import { NavLink } from "react-router-dom";
 
 import styles from "./Header.module.scss";
 
-const Header = () => {
+const Header: FC = () => {
   return (
     <header className={styles.header}>
       <div className={styles.inner}>

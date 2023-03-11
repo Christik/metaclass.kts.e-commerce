@@ -1,19 +1,27 @@
 import { FC, memo } from "react";
 
 import Card from "@components/Card";
-import { Product } from "@config/types";
+import { ROUTS } from "@config/routs";
+import { ProductModel } from "@store/models/product";
+import { generatePath, useNavigate } from "react-router";
 
 import styles from "./CardList.module.scss";
 
 type CardListProps = {
-  cards: Product[];
+  cards: ProductModel[];
 };
 
 const CardList: FC<CardListProps> = ({ cards }) => {
+  const navigate = useNavigate();
+
   return (
     <div className={styles["card-list"]}>
-      {cards.map(
-        ({ id, images, category, title, description, price, onClick }) => (
+      {cards.map(({ id, images, category, title, description, price }) => {
+        const clickHandler = () => {
+          navigate(generatePath(ROUTS.PRODUCT, { id }));
+        };
+
+        return (
           <Card
             key={id}
             image={images[0]}
@@ -21,10 +29,10 @@ const CardList: FC<CardListProps> = ({ cards }) => {
             title={title}
             subtitle={description}
             price={price}
-            onClick={onClick}
+            onClick={clickHandler}
           />
-        )
-      )}
+        );
+      })}
     </div>
   );
 };

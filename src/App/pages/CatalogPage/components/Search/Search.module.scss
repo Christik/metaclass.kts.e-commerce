@@ -1,0 +1,83 @@
+@import "@styles/variables";
+
+/*=========================
+  Search
+===========================*/
+
+.search {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 15px 28px;
+  background: $primary-bg-color;
+  box-shadow: $primary-shadow;
+
+  @media #{$mobile} {
+    padding: 8px;
+  }
+}
+
+/*=========================
+  Icon
+===========================*/
+
+@mixin icon-size($size) {
+  width: $size;
+  height: $size;
+}
+
+.icon {
+  @include icon-size(32px);
+
+  order: -1;
+  margin-right: 18px;
+  display: block;
+  fill: none;
+
+  path {
+    stroke: $secondary-text-color;
+    stroke-width: 2px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  @media #{$mobile} {
+    @include icon-size(24px);
+
+    margin-left: 6px;
+    margin-right: 12px;
+  }
+}
+
+/*=========================
+  Input
+===========================*/
+
+.input {
+  flex-grow: 1;
+  height: 100%;
+  color: $primary-text-color;
+  font-size: 18px;
+  font-weight: 500;
+  border: none;
+  background: none;
+  outline: none;
+
+  @media #{$mobile} { font-size: 14px; }
+
+  &::placeholder {
+    color: $secondary-text-color;
+  }
+
+  &:focus + .icon path {
+    stroke: $accent-text-color;
+  }
+}
+
+/*=========================
+  Button
+===========================*/
+
+.button {
+  flex-shrink: 0;
+}

@@ -1,0 +1,40 @@
+@import "@styles/variables.scss";
+
+/*=========================
+  Filter
+===========================*/
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon {
+  margin-right: 12px;
+  display: block;
+  width: 30px;
+  height: 30px;
+  fill: none;
+
+  path {
+    stroke: $primary-text-color;
+    stroke-width: 2px;
+    stroke-miterlimit: 10;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+
+    .filter_disabled & { stroke: $secondary-text-color; }
+  }
+
+  @media #{$mobile} {
+    margin-right: 8px;
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.counter {
+  margin-left: .25em;
+  color: $accent-text-color;
+}

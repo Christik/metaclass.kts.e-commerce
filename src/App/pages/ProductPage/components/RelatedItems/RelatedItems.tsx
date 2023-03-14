@@ -22,10 +22,6 @@ const LIMIT = 3;
 const RelatedItems: FC<RelatedItemsProps> = ({ className, category }) => {
   const productsStore = useLocalStore(() => new ProductsStore(LIMIT));
 
-  const isLoading = productsStore.meta === Meta.loading;
-  const isError = productsStore.meta === Meta.error;
-  const isSuccess = productsStore.meta === Meta.success;
-
   const { id } = category;
 
   useEffect(() => {
@@ -39,11 +35,13 @@ const RelatedItems: FC<RelatedItemsProps> = ({ className, category }) => {
         Related items
       </Title>
 
-      {isLoading && <Loader position={LoaderPosition.centered} />}
+      {productsStore.isLoading && <Loader position={LoaderPosition.centered} />}
 
-      {isError && <InfoMessage>Oops. Something went wrong.</InfoMessage>}
+      {productsStore.isError && (
+        <InfoMessage>Oops. Something went wrong.</InfoMessage>
+      )}
 
-      {isSuccess && <CardList cards={productsStore.list} />}
+      {productsStore.isSuccess && <CardList cards={productsStore.list} />}
     </section>
   );
 };

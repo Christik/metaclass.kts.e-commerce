@@ -39,6 +39,9 @@ export default class CategoryStore implements ILocalStore {
       list: computed,
       current: computed,
       meta: computed,
+      isLoading: computed,
+      isError: computed,
+      isSuccess: computed,
       setCurrent: action,
       getCategories: action,
     });
@@ -54,6 +57,18 @@ export default class CategoryStore implements ILocalStore {
 
   get meta(): Meta {
     return this._meta;
+  }
+
+  get isLoading(): boolean {
+    return this._meta === Meta.loading;
+  }
+
+  get isError(): boolean {
+    return this._meta === Meta.error;
+  }
+
+  get isSuccess(): boolean {
+    return this._meta === Meta.success;
   }
 
   setCurrent(id: number | null): void {

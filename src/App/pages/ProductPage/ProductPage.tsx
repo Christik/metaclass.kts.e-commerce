@@ -16,10 +16,6 @@ import NotFoundPage from "../NotFoundPage";
 const ProductPage: FC = () => {
   const productDetailStore = useLocalStore(() => new ProductDetailStore());
 
-  const isLoading = productDetailStore.meta === Meta.loading;
-  const isError = productDetailStore.meta === Meta.error;
-  const isSuccess = productDetailStore.meta === Meta.success;
-
   const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
@@ -30,11 +26,13 @@ const ProductPage: FC = () => {
 
   return (
     <>
-      {isError && <NotFoundPage />}
+      {productDetailStore.isError && <NotFoundPage />}
 
-      {isLoading && <Loader position={LoaderPosition.centered} />}
+      {productDetailStore.isLoading && (
+        <Loader position={LoaderPosition.centered} />
+      )}
 
-      {isSuccess && (
+      {productDetailStore.isSuccess && (
         <>
           <div className={styles.content}>
             <Gallery

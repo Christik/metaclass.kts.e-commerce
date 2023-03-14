@@ -32,8 +32,6 @@ const Filter: FC<FilterProps> = ({ className }) => {
 
   const categoryStore = useLocalStore(() => new CategoryStore());
 
-  const isLoading = categoryStore.meta === Meta.loading;
-
   const categoryParam = rootStore.query.getParam("category");
   const value = categoryParam ? String(categoryParam) : "";
 
@@ -72,12 +70,12 @@ const Filter: FC<FilterProps> = ({ className }) => {
     <Select
       className={classnames(
         styles.filter,
-        { [styles["filter_disabled"]]: isLoading },
+        { [styles["filter_disabled"]]: categoryStore.isLoading },
         className
       )}
       options={options}
       value={value}
-      disabled={isLoading}
+      disabled={categoryStore.isLoading}
       onChange={onSelectChange}
       pluralizeOptions={() => <FilterHeader />}
     />

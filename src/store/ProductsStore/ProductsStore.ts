@@ -70,6 +70,10 @@ export default class ProductsStore implements ILocalStore {
       page: computed,
       category: computed,
       meta: computed,
+      isLoading: computed,
+      isError: computed,
+      isSuccess: computed,
+      isEmpty: computed,
       _setOffset: action,
       setCategory: action,
       setPage: action,
@@ -99,6 +103,22 @@ export default class ProductsStore implements ILocalStore {
 
   get meta(): Meta {
     return this._meta;
+  }
+
+  get isLoading(): boolean {
+    return this._meta === Meta.loading;
+  }
+
+  get isError(): boolean {
+    return this._meta === Meta.error;
+  }
+
+  get isSuccess(): boolean {
+    return this._meta === Meta.success;
+  }
+
+  get isEmpty(): boolean {
+    return this.isSuccess && this.list?.length === 0;
   }
 
   private _setOffset = (): void => {

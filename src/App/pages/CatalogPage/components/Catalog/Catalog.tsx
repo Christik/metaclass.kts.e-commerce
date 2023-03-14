@@ -21,11 +21,6 @@ const Catalog: FC = () => {
 
   const productsStore = useLocalStore(() => new ProductsStore(LIMIT));
 
-  const isLoading = productsStore.meta === Meta.loading;
-  const isSuccess = productsStore.meta === Meta.success && productsStore.limit;
-  const isError = productsStore.meta === Meta.error;
-  const isEmpty = isSuccess && productsStore.list.length === 0;
-
   const onPageChange = useCallback(
     (page: number) => {
       window.scrollTo(0, 0);
@@ -43,14 +38,16 @@ const Catalog: FC = () => {
     <section>
       <header className={styles.header}>
         <Title>Total product</Title>
-        {isSuccess && <Badge>{productsStore.count}</Badge>}
+        {productsStore.isSuccess && <Badge>{productsStore.count}</Badge>}
       </header>
 
-      {isLoading && <Loader position={LoaderPosition.centered} />}
+      {productsStore.isLoading && <Loader position={LoaderPosition.centered} />}
 
-      {isError && <InfoMessage>Oops. Something went wrong.</InfoMessage>}
+      {productsStore.isError && (
+        <InfoMessage>Oops. Something went wrong.</InfoMessage>
+      )}
 
-      {isSuccess && (
+      {productsStore.isSuccess && productsStore.limit && (
         <>
           <CardList cards={productsStore.list} />
 
@@ -64,7 +61,7 @@ const Catalog: FC = () => {
         </>
       )}
 
-      {isEmpty && <InfoMessage>No results</InfoMessage>}
+      {productsStore.isEmpty && <InfoMessage>No results</InfoMessage>}
     </section>
   );
 };

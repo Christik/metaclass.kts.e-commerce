@@ -22,7 +22,7 @@ const Catalog: FC = () => {
   const productsStore = useLocalStore(() => new ProductsStore(LIMIT));
 
   const isLoading = productsStore.meta === Meta.loading;
-  const isSuccess = productsStore.meta === Meta.success;
+  const isSuccess = productsStore.meta === Meta.success && productsStore.limit;
   const isError = productsStore.meta === Meta.error;
   const isEmpty = isSuccess && productsStore.list.length === 0;
 

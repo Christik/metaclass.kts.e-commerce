@@ -42,8 +42,8 @@ export default class ProductsStore implements ILocalStore {
   private _list: CollectionModel<number, ProductModel> =
     getInitialCollectionModel();
   private _count: number | null = null;
-  private _limit: number = 0;
-  private _offset: number = 0;
+  private _limit: number | null = null;
+  private _offset: number | null = null;
   private _meta: Meta = Meta.initial;
   private _search: QueryParam = rootStore.query.getParam("search");
   private _page: number = rootStore.query.getParam("page")
@@ -89,7 +89,7 @@ export default class ProductsStore implements ILocalStore {
     return this._page;
   }
 
-  get limit(): number {
+  get limit(): number | null {
     return this._limit;
   }
 
@@ -102,7 +102,7 @@ export default class ProductsStore implements ILocalStore {
   }
 
   private _setOffset = (): void => {
-    this._offset = this._page * this._limit - this._limit;
+    this._offset = this._limit ? this._page * this._limit - this._limit : null;
   };
 
   setPage = (page: number): void => {
@@ -115,10 +115,10 @@ export default class ProductsStore implements ILocalStore {
   };
 
   private async _getList(
-    offset: number = 0,
-    limit: number = 0
+    offset: number | null = 0,
+    limit: number | null = 0
   ): Promise<ProductApi[]> {
-    const offsetPath = `offset=${offset}&limit=${limit}`;
+    const offsetPath = `offset=${offset ?? 0}&limit=${limit ?? 0}`;
     const categoryPath = this._category ? `categoryId=${this._category}` : "";
     const titlePath = this._search ? `title=${this._search}` : "";
     const url = `${API_ENDPOINTS.PRODUCTS}?${offsetPath}&${categoryPath}&${titlePath}`;

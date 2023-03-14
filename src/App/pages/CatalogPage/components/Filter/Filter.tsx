@@ -34,6 +34,9 @@ const Filter: FC<FilterProps> = ({ className }) => {
 
   const isLoading = categoryStore.meta === Meta.loading;
 
+  const categoryParam = rootStore.query.getParam("category");
+  const value = categoryParam ? String(categoryParam) : "";
+
   const options = useMemo<Option[]>(() => {
     return categoryStore.list.map(({ id, name }) => ({
       key: String(id),
@@ -73,7 +76,7 @@ const Filter: FC<FilterProps> = ({ className }) => {
         className
       )}
       options={options}
-      value={rootStore.query.getParam("category") ?? ""}
+      value={value}
       disabled={isLoading}
       onChange={onSelectChange}
       pluralizeOptions={() => <FilterHeader />}

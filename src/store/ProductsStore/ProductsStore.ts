@@ -12,6 +12,7 @@ import {
   normalizeCollection,
 } from "@store/models/shared";
 import rootStore from "@store/RootStore/instance";
+import { QueryParam } from "@store/RootStore/QueryParamsStore";
 import { Meta } from "@utils/meta";
 import { ILocalStore } from "@utils/useLocalStore";
 import {
@@ -44,7 +45,7 @@ export default class ProductsStore implements ILocalStore {
   private _limit: number = 0;
   private _offset: number = 0;
   private _meta: Meta = Meta.initial;
-  private _search: string = rootStore.query.getParam("search");
+  private _search: QueryParam = rootStore.query.getParam("search");
   private _page: number = rootStore.query.getParam("page")
     ? Number(rootStore.query.getParam("page"))
     : 1;

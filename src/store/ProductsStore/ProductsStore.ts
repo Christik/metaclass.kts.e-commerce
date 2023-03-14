@@ -183,5 +183,7 @@ export default class ProductsStore implements ILocalStore {
     }
   );
 
-  destroy(): void {}
+  destroy(): void {
+    this._apiStore.destroy();
+  }
 }

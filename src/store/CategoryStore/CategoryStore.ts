@@ -83,5 +83,7 @@ export default class CategoryStore implements ILocalStore {
     }
   }
 
-  destroy(): void {}
+  destroy(): void {
+    this._apiStore.destroy();
+  }
 }

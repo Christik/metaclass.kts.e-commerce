@@ -60,5 +60,7 @@ export default class ProductDetailStore implements ILocalStore {
     }
   }
 
-  destroy(): void {}
+  destroy(): void {
+    this._apiStore.destroy();
+  }
 }

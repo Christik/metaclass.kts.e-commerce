@@ -1,12 +1,15 @@
 import { FC, useEffect } from "react";
 
 import Layout from "@components/Layout";
+import Loader from "@components/Loader";
 import PrivateRoute from "@components/PrivateRoute";
 import { ROUTS } from "@config/routs";
 import rootStore from "@store/RootStore/instance";
+import { AuthStatus } from "@utils/auth";
 import { observer } from "mobx-react-lite";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
+import styles from "./App.module.scss";
 import CatalogPage from "./pages/CatalogPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import ProductPage from "./pages/ProductPage";
@@ -19,21 +22,27 @@ const App: FC = () => {
 
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path={ROUTS.INDEX} element={<Layout />}>
-          <Route index element={<CatalogPage />} />
-          <Route path={ROUTS.PRODUCT} element={<ProductPage />} />
-          <Route
-            path={ROUTS.USER}
-            element={
-              <PrivateRoute authStatus={rootStore.auth.status}>
-                <UserPage />
-              </PrivateRoute>
-            }
-          />
-          <Route path={ROUTS.NOT_FOUND} element={<NotFoundPage />} />
-        </Route>
-      </Routes>
+      {rootStore.auth.status === AuthStatus.unknown ? (
+        <div className={styles.loader}>
+          <Loader />
+        </div>
+      ) : (
+        <Routes>
+          <Route path={ROUTS.INDEX} element={<Layout />}>
+            <Route index element={<CatalogPage />} />
+            <Route path={ROUTS.PRODUCT} element={<ProductPage />} />
+            <Route
+              path={ROUTS.USER}
+              element={
+                <PrivateRoute authStatus={rootStore.auth.status}>
+                  <UserPage />
+                </PrivateRoute>
+              }
+            />
+            <Route path={ROUTS.NOT_FOUND} element={<NotFoundPage />} />
+          </Route>
+        </Routes>
+      )}
     </BrowserRouter>
   );
 };

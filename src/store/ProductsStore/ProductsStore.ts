@@ -12,6 +12,7 @@ import {
   normalizeCollection,
 } from "@store/models/shared";
 import rootStore from "@store/RootStore/instance";
+import { QueryParam } from "@store/RootStore/QueryParamsStore";
 import { Meta } from "@utils/meta";
 import { ILocalStore } from "@utils/useLocalStore";
 import {
@@ -41,10 +42,10 @@ export default class ProductsStore implements ILocalStore {
   private _list: CollectionModel<number, ProductModel> =
     getInitialCollectionModel();
   private _count: number | null = null;
-  private _limit: number = 0;
-  private _offset: number = 0;
+  private _limit: number | null = null;
+  private _offset: number | null = null;
   private _meta: Meta = Meta.initial;
-  private _search: string = rootStore.query.getParam("search");
+  private _search: QueryParam = rootStore.query.getParam("search");
   private _page: number = rootStore.query.getParam("page")
     ? Number(rootStore.query.getParam("page"))
     : 1;
@@ -69,10 +70,14 @@ export default class ProductsStore implements ILocalStore {
       page: computed,
       category: computed,
       meta: computed,
-      _setOffset: action,
-      setCategory: action,
-      setPage: action,
-      getProducts: action,
+      isLoading: computed,
+      isError: computed,
+      isSuccess: computed,
+      isEmpty: computed,
+      _setOffset: action.bound,
+      setCategory: action.bound,
+      setPage: action.bound,
+      getProducts: action.bound,
     });
   }
 
@@ -88,7 +93,7 @@ export default class ProductsStore implements ILocalStore {
     return this._page;
   }
 
-  get limit(): number {
+  get limit(): number | null {
     return this._limit;
   }
 
@@ -100,8 +105,24 @@ export default class ProductsStore implements ILocalStore {
     return this._meta;
   }
 
+  get isLoading(): boolean {
+    return this._meta === Meta.loading;
+  }
+
+  get isError(): boolean {
+    return this._meta === Meta.error;
+  }
+
+  get isSuccess(): boolean {
+    return this._meta === Meta.success;
+  }
+
+  get isEmpty(): boolean {
+    return this.isSuccess && this.list?.length === 0;
+  }
+
   private _setOffset = (): void => {
-    this._offset = this._page * this._limit - this._limit;
+    this._offset = this._limit ? this._page * this._limit - this._limit : null;
   };
 
   setPage = (page: number): void => {
@@ -114,10 +135,10 @@ export default class ProductsStore implements ILocalStore {
   };
 
   private async _getList(
-    offset: number = 0,
-    limit: number = 0
+    offset: number | null = 0,
+    limit: number | null = 0
   ): Promise<ProductApi[]> {
-    const offsetPath = `offset=${offset}&limit=${limit}`;
+    const offsetPath = `offset=${offset ?? 0}&limit=${limit ?? 0}`;
     const categoryPath = this._category ? `categoryId=${this._category}` : "";
     const titlePath = this._search ? `title=${this._search}` : "";
     const url = `${API_ENDPOINTS.PRODUCTS}?${offsetPath}&${categoryPath}&${titlePath}`;
@@ -183,5 +204,10 @@ export default class ProductsStore implements ILocalStore {
     }
   );
 
-  destroy(): void {}
+  destroy(): void {
+    this._apiStore.destroy();
+    this._queryCategoryReaction();
+    this._queryPageReaction();
+    this._querySearchReaction();
+  }
 }

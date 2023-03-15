@@ -7,7 +7,6 @@ import Loader, { LoaderPosition } from "@components/Loader";
 import Pagination from "@components/Pagination";
 import Title from "@components/Title";
 import ProductsStore from "@store/ProductsStore";
-import { Meta } from "@utils/meta";
 import { useLocalStore } from "@utils/useLocalStore";
 import { observer } from "mobx-react-lite";
 import { useSearchParams } from "react-router-dom";
@@ -20,11 +19,6 @@ const Catalog: FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const productsStore = useLocalStore(() => new ProductsStore(LIMIT));
-
-  const isLoading = productsStore.meta === Meta.loading;
-  const isSuccess = productsStore.meta === Meta.success;
-  const isError = productsStore.meta === Meta.error;
-  const isEmpty = isSuccess && productsStore.list.length === 0;
 
   const onPageChange = useCallback(
     (page: number) => {
@@ -43,14 +37,16 @@ const Catalog: FC = () => {
     <section>
       <header className={styles.header}>
         <Title>Total product</Title>
-        {isSuccess && <Badge>{productsStore.count}</Badge>}
+        {productsStore.isSuccess && <Badge>{productsStore.count}</Badge>}
       </header>
 
-      {isLoading && <Loader position={LoaderPosition.centered} />}
+      {productsStore.isLoading && <Loader position={LoaderPosition.centered} />}
 
-      {isError && <InfoMessage>Oops. Something went wrong.</InfoMessage>}
+      {productsStore.isError && (
+        <InfoMessage>Oops. Something went wrong.</InfoMessage>
+      )}
 
-      {isSuccess && (
+      {productsStore.isSuccess && productsStore.limit && (
         <>
           <CardList cards={productsStore.list} />
 
@@ -64,7 +60,7 @@ const Catalog: FC = () => {
         </>
       )}
 
-      {isEmpty && <InfoMessage>No results</InfoMessage>}
+      {productsStore.isEmpty && <InfoMessage>No results</InfoMessage>}
     </section>
   );
 };

@@ -3,7 +3,6 @@ import { FC, useCallback, useEffect, useMemo } from "react";
 import Select, { Option } from "@components/Select";
 import CategoryStore from "@store/CategoryStore";
 import rootStore from "@store/RootStore/instance";
-import { Meta } from "@utils/meta";
 import { useLocalStore } from "@utils/useLocalStore";
 import classnames from "classnames";
 import { observer } from "mobx-react-lite";
@@ -32,7 +31,8 @@ const Filter: FC<FilterProps> = ({ className }) => {
 
   const categoryStore = useLocalStore(() => new CategoryStore());
 
-  const isLoading = categoryStore.meta === Meta.loading;
+  const categoryParam = rootStore.query.getParam("category");
+  const value = categoryParam ? String(categoryParam) : "";
 
   const options = useMemo<Option[]>(() => {
     return categoryStore.list.map(({ id, name }) => ({
@@ -69,12 +69,12 @@ const Filter: FC<FilterProps> = ({ className }) => {
     <Select
       className={classnames(
         styles.filter,
-        { [styles["filter_disabled"]]: isLoading },
+        { [styles["filter_disabled"]]: categoryStore.isLoading },
         className
       )}
       options={options}
-      value={rootStore.query.getParam("category") ?? ""}
-      disabled={isLoading}
+      value={value}
+      disabled={categoryStore.isLoading}
       onChange={onSelectChange}
       pluralizeOptions={() => <FilterHeader />}
     />

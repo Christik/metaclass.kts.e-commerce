@@ -2,7 +2,6 @@ import { FC, useEffect } from "react";
 
 import Loader, { LoaderPosition } from "@components/Loader";
 import ProductDetailStore from "@store/ProductDetailStore";
-import { Meta } from "@utils/meta";
 import { useLocalStore } from "@utils/useLocalStore";
 import { observer } from "mobx-react-lite";
 import { useParams } from "react-router-dom";
@@ -16,10 +15,6 @@ import NotFoundPage from "../NotFoundPage";
 const ProductPage: FC = () => {
   const productDetailStore = useLocalStore(() => new ProductDetailStore());
 
-  const isLoading = productDetailStore.meta === Meta.loading;
-  const isError = productDetailStore.meta === Meta.error;
-  const isSuccess = productDetailStore.meta === Meta.success;
-
   const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
@@ -30,11 +25,13 @@ const ProductPage: FC = () => {
 
   return (
     <>
-      {isError && <NotFoundPage />}
+      {productDetailStore.isError && <NotFoundPage />}
 
-      {isLoading && <Loader position={LoaderPosition.centered} />}
+      {productDetailStore.isLoading && (
+        <Loader position={LoaderPosition.centered} />
+      )}
 
-      {isSuccess && (
+      {productDetailStore.isSuccess && (
         <>
           <div className={styles.content}>
             <Gallery

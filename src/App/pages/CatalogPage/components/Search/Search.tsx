@@ -45,7 +45,10 @@ const Search: FC<SearchProps> = ({ className }) => {
   );
 
   useEffect(() => {
-    setSearch(rootStore.query.getParam("search"));
+    const searchParam = rootStore.query.getParam("search");
+    const value = searchParam ? String(searchParam) : "";
+
+    setSearch(value);
   }, []);
 
   return (
@@ -57,7 +60,7 @@ const Search: FC<SearchProps> = ({ className }) => {
         className={styles.input}
         type="text"
         placeholder="Search property"
-        value={search || ""}
+        value={search ?? ""}
         onChange={onInputChange}
       />
 

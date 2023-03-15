@@ -1,6 +1,7 @@
+import { ILocalStore } from "@utils/useLocalStore";
 import axios, { AxiosResponse } from "axios";
 
-export default class ApiStore {
+export default class ApiStore implements ILocalStore {
   private _baseUrl: string | null = null;
 
   constructor(baseUrl: string) {
@@ -13,4 +14,6 @@ export default class ApiStore {
     );
     return response.data;
   }
+
+  destroy(): void {}
 }

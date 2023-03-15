@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const TsCheckerPlugin = require("fork-ts-checker-webpack-plugin");
 const ESLintWebpackPlugin = require("eslint-webpack-plugin");
+const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 
 const distPath = path.resolve(__dirname, "dist");
 const srcPath = path.resolve(__dirname, "src");
@@ -90,6 +91,7 @@ module.exports = {
       context: srcPath,
       extensions: [".tsx", ".ts", ".jsx", ".js"],
     }),
+    !isProd && new ReactRefreshWebpackPlugin(),
   ].filter(Boolean),
   resolve: {
     extensions: [".tsx", ".ts", ".jsx", ".js"],

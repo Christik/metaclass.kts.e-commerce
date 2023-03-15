@@ -10,6 +10,7 @@ module.exports = api => {
     ],
     plugins: [
       '@babel/plugin-proposal-optional-chaining',
-    ],
+      process.env.NODE_ENV === 'development' && 'react-refresh/babel',
+    ].filter(Boolean),
   }
 }

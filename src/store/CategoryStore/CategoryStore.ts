@@ -42,8 +42,8 @@ export default class CategoryStore implements ILocalStore {
       isLoading: computed,
       isError: computed,
       isSuccess: computed,
-      setCurrent: action,
-      getCategories: action,
+      setCurrent: action.bound,
+      getCategories: action.bound,
     });
   }
 

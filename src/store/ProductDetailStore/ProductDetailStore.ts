@@ -33,7 +33,7 @@ export default class ProductDetailStore implements ILocalStore {
       isLoading: computed,
       isError: computed,
       isSuccess: computed,
-      getProductDetail: action,
+      getProductDetail: action.bound,
     });
   }
 

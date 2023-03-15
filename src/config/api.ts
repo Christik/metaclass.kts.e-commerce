@@ -5,4 +5,5 @@ export const API_ENDPOINTS = {
   PRODUCTS_BY_CATEGORY: "products/?categoryId=",
   CATEGORIES: "categories/",
   AUTH: "auth/login",
+  AUTH_USER: "auth/profile",
 };

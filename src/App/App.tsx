@@ -1,9 +1,10 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 
 import Layout from "@components/Layout";
 import PrivateRoute from "@components/PrivateRoute";
 import { ROUTS } from "@config/routs";
-import { AuthStatus } from "@utils/auth";
+import rootStore from "@store/RootStore/instance";
+import { observer } from "mobx-react-lite";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import CatalogPage from "./pages/CatalogPage";
@@ -12,6 +13,10 @@ import ProductPage from "./pages/ProductPage";
 import UserPage from "./pages/UserPage";
 
 const App: FC = () => {
+  useEffect(() => {
+    rootStore.auth.getUser();
+  }, []);
+
   return (
     <BrowserRouter>
       <Routes>
@@ -21,7 +26,7 @@ const App: FC = () => {
           <Route
             path={ROUTS.USER}
             element={
-              <PrivateRoute authStatus={AuthStatus.auth}>
+              <PrivateRoute authStatus={rootStore.auth.status}>
                 <UserPage />
               </PrivateRoute>
             }
@@ -33,4 +38,4 @@ const App: FC = () => {
   );
 };
 
-export default App;
+export default observer(App);

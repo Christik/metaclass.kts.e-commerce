@@ -7,7 +7,6 @@ import Loader, { LoaderPosition } from "@components/Loader";
 import Pagination from "@components/Pagination";
 import Title from "@components/Title";
 import ProductsStore from "@store/ProductsStore";
-import { Meta } from "@utils/meta";
 import { useLocalStore } from "@utils/useLocalStore";
 import { observer } from "mobx-react-lite";
 import { useSearchParams } from "react-router-dom";

@@ -74,10 +74,10 @@ export default class ProductsStore implements ILocalStore {
       isError: computed,
       isSuccess: computed,
       isEmpty: computed,
-      _setOffset: action,
-      setCategory: action,
-      setPage: action,
-      getProducts: action,
+      _setOffset: action.bound,
+      setCategory: action.bound,
+      setPage: action.bound,
+      getProducts: action.bound,
     });
   }
 
@@ -206,5 +206,8 @@ export default class ProductsStore implements ILocalStore {
 
   destroy(): void {
     this._apiStore.destroy();
+    this._queryCategoryReaction();
+    this._queryPageReaction();
+    this._querySearchReaction();
   }
 }

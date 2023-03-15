@@ -2,7 +2,6 @@ import { FC, useEffect } from "react";
 
 import Loader, { LoaderPosition } from "@components/Loader";
 import ProductDetailStore from "@store/ProductDetailStore";
-import { Meta } from "@utils/meta";
 import { useLocalStore } from "@utils/useLocalStore";
 import { observer } from "mobx-react-lite";
 import { useParams } from "react-router-dom";

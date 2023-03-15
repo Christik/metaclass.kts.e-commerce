@@ -3,7 +3,6 @@ import { FC, useCallback, useEffect, useMemo } from "react";
 import Select, { Option } from "@components/Select";
 import CategoryStore from "@store/CategoryStore";
 import rootStore from "@store/RootStore/instance";
-import { Meta } from "@utils/meta";
 import { useLocalStore } from "@utils/useLocalStore";
 import classnames from "classnames";
 import { observer } from "mobx-react-lite";

@@ -6,7 +6,6 @@ import Loader, { LoaderPosition } from "@components/Loader";
 import Title, { TitleSize } from "@components/Title";
 import { CategoryModel } from "@store/models/product";
 import ProductsStore from "@store/ProductsStore";
-import { Meta } from "@utils/meta";
 import { useLocalStore } from "@utils/useLocalStore";
 import { observer } from "mobx-react-lite";
 

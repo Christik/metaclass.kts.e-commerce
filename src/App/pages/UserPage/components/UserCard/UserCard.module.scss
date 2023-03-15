@@ -1,0 +1,40 @@
+@import "@styles/variables.scss";
+
+/*=========================
+  User Card
+===========================*/
+
+.user {
+  display: flex;
+  align-items: center;
+}
+
+.content {
+  margin-left: 30px;
+
+  @media #{$mobile} {
+    margin-left: 20px;
+  }
+}
+
+/*=========================
+  Avatar
+===========================*/
+
+@mixin avatar-size($size) {
+  width: $size;
+  height: $size;
+}
+
+.avatar {
+  @include avatar-size(140px);
+
+  flex-shrink: 0;
+  border-radius: 50%;
+  background-color: $tertiary-bg-color;
+  object-fit: cover;
+
+  @media #{$mobile} {
+    @include avatar-size(80px);
+  }
+}

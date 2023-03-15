@@ -14,7 +14,17 @@
   background: $secondary-bg-color;
   outline: none;
 
+  @media #{$mobile} {
+    height: $mob-control-height;
+    padding: 0 18px;
+    font-size: 14px;
+  }
+
   &:focus {
     border-color: $accent-border-color;
+  }
+
+  &::placeholder {
+    color: $secondary-text-color;
   }
 }

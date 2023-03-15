@@ -7,6 +7,7 @@ import styles from "./Button.module.scss";
 
 type ButtonProps = PropsWithChildren<{
   loading?: boolean;
+  isBlock?: boolean;
 }> &
   ButtonHTMLAttributes<HTMLButtonElement>;
 
@@ -15,6 +16,7 @@ const Button: FC<ButtonProps> = ({
   children,
   disabled,
   loading,
+  isBlock,
   ...attrs
 }) => {
   return (
@@ -23,6 +25,9 @@ const Button: FC<ButtonProps> = ({
         styles.button,
         {
           [styles["button_disabled"]]: disabled || loading,
+        },
+        {
+          [styles["button_block"]]: isBlock,
         },
         className
       )}

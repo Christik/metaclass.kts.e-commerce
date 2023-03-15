@@ -143,7 +143,7 @@ export default class ProductsStore implements ILocalStore {
     const titlePath = this._search ? `title=${this._search}` : "";
     const url = `${API_ENDPOINTS.PRODUCTS}?${offsetPath}&${categoryPath}&${titlePath}`;
 
-    return await this._apiStore.request<ProductApi[]>(url);
+    return await this._apiStore.get<ProductApi[]>(url);
   }
 
   async getProducts(shouldCounterRecalc: boolean = false): Promise<void> {

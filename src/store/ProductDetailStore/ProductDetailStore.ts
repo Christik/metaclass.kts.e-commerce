@@ -63,7 +63,7 @@ export default class ProductDetailStore implements ILocalStore {
 
     try {
       const url = `${API_ENDPOINTS.PRODUCTS}${id}`;
-      const data = await this._apiStore.request<ProductApi>(url);
+      const data = await this._apiStore.get<ProductApi>(url);
 
       runInAction(() => {
         this._product = normalizeProduct(data);

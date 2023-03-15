@@ -80,7 +80,7 @@ export default class CategoryStore implements ILocalStore {
     this._list = getInitialCollectionModel();
 
     try {
-      const data = await this._apiStore.request<CategoryApi[]>(
+      const data = await this._apiStore.get<CategoryApi[]>(
         API_ENDPOINTS.CATEGORIES
       );
 

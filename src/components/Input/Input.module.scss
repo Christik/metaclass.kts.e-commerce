@@ -1,0 +1,20 @@
+@import "@styles/variables.scss";
+
+/*=========================
+  Input
+===========================*/
+
+.input {
+  display: block;
+  width: 100%;
+  height: $control-height;
+  padding: 0 28px;
+  border: solid 1px $secondary-border-color;
+  font-size: 18px;
+  background: $secondary-bg-color;
+  outline: none;
+
+  &:focus {
+    border-color: $accent-border-color;
+  }
+}

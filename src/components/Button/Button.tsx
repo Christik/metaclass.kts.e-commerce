@@ -6,7 +6,7 @@ import classnames from "classnames";
 import styles from "./Button.module.scss";
 
 type ButtonProps = PropsWithChildren<{
-  loading?: boolean;
+  isLoading?: boolean;
   isBlock?: boolean;
 }> &
   ButtonHTMLAttributes<HTMLButtonElement>;
@@ -15,7 +15,7 @@ const Button: FC<ButtonProps> = ({
   className,
   children,
   disabled,
-  loading,
+  isLoading,
   isBlock,
   ...attrs
 }) => {
@@ -24,17 +24,17 @@ const Button: FC<ButtonProps> = ({
       className={classnames(
         styles.button,
         {
-          [styles["button_disabled"]]: disabled || loading,
+          [styles["button_disabled"]]: disabled || isLoading,
         },
         {
           [styles["button_block"]]: isBlock,
         },
         className
       )}
-      disabled={disabled || loading}
+      disabled={disabled || isLoading}
       {...attrs}
     >
-      {loading && (
+      {isLoading && (
         <Loader
           className={styles.loader}
           size={LoaderSize.s}

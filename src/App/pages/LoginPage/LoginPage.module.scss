@@ -4,10 +4,21 @@
   Login
 ===========================*/
 
-.title {
+.header {
+  margin: 0 auto 80px;
+  max-width: 600px;
   text-align: center;
-  margin-bottom: 1em;
+
+  @media #{$mobile} { margin-bottom: 25px; }
 }
+
+.tip {
+  margin-top: 20px;
+}
+
+/*=========================
+  Form
+===========================*/
 
 .form {
   margin: 0 auto;

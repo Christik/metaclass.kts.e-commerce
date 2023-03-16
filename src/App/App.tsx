@@ -18,7 +18,7 @@ import UserPage from "./pages/UserPage";
 
 const App: FC = () => {
   useEffect(() => {
-    rootStore.auth.getUser();
+    rootStore.auth.check();
   }, []);
 
   return (

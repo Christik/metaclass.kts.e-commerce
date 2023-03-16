@@ -41,3 +41,11 @@ $mob-control-height: 38px;
 ===========================*/
 
 $mobile: "(max-width: 768px)";
+
+/*=========================
+  Toastify
+===========================*/
+
+:root {
+  --toastify-font-family: $primary-font;
+}

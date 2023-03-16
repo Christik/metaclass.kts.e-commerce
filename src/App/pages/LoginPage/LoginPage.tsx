@@ -1,11 +1,13 @@
 import { FC, FormEvent, useCallback, useState } from "react";
 
 import Button from "@components/Button";
-import Input from "@components/Input";
+import Input, { InputStatus } from "@components/Input";
 import Text from "@components/Text";
+import { TextType } from "@components/Text/Text";
 import Title, { TitleSize } from "@components/Title";
 import { ROUTS } from "@config/routs";
 import rootStore from "@store/RootStore/instance";
+import { getEmailError, getPasswordError } from "@utils/validator";
 import { observer } from "mobx-react-lite";
 import { Navigate, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -15,12 +17,21 @@ import styles from "./LoginPage.module.scss";
 const LoginPage: FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [emailError, setEmailError] = useState<string | null>(null);
+  const [passwordError, setPasswordError] = useState<string | null>(null);
 
   const navigate = useNavigate();
 
   const handleSubmit = useCallback(
     async (evt: FormEvent) => {
       evt.preventDefault();
+
+      setEmailError(getEmailError(email));
+      setPasswordError(getPasswordError(password));
+
+      if (getEmailError(email) || getPasswordError(password)) {
+        return;
+      }
 
       await rootStore.auth.login(email, password);
 
@@ -50,19 +61,28 @@ const LoginPage: FC = () => {
         </div>
       </div>
 
-      <form className={styles.form} onSubmit={handleSubmit}>
-        <Input
-          className={styles.field}
-          placeholder="E-mail"
-          onChange={(value) => setEmail(value)}
-        />
+      <form className={styles.form} onSubmit={handleSubmit} noValidate>
+        <div className={styles.field}>
+          <Input
+            type="email"
+            placeholder="E-mail"
+            status={emailError ? InputStatus.error : null}
+            onChange={(value) => setEmail(value)}
+          />
 
-        <Input
-          className={styles.field}
-          type="password"
-          placeholder="Password"
-          onChange={(value) => setPassword(value)}
-        />
+          {emailError && <Text type={TextType.error}>{emailError}</Text>}
+        </div>
+
+        <div className={styles.field}>
+          <Input
+            type="password"
+            placeholder="Password"
+            status={passwordError ? InputStatus.error : null}
+            onChange={(value) => setPassword(value)}
+          />
+
+          {passwordError && <Text type={TextType.error}>{passwordError}</Text>}
+        </div>
 
         <Button type="submit" isLoading={rootStore.auth.isLoading} isBlock>
           Login

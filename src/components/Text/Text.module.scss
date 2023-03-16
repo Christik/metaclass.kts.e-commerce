@@ -11,4 +11,12 @@
   line-height: 1.8em;
 
   @media #{$mobile} { font-size: 14px; }
+
+  &_error {
+    color: $error-color;
+  }
+
+  &_warning {
+    color: $warning-color;
+  }
 }

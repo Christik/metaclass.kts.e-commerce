@@ -27,4 +27,14 @@
   &::placeholder {
     color: $secondary-text-color;
   }
+
+  &_error,
+  &_error:focus {
+    border-color: $error-color;
+  }
+
+  &_warning,
+  &_warning:focus {
+    border-color: $warning-color;
+  }
 }

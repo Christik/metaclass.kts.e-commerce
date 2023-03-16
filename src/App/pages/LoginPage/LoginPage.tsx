@@ -1,6 +1,7 @@
 import { FC, FormEvent, useCallback, useState } from "react";
 
 import Button from "@components/Button";
+import { IconType } from "@components/Icon";
 import Input, { InputStatus } from "@components/Input";
 import Text from "@components/Text";
 import { TextType } from "@components/Text/Text";
@@ -67,6 +68,7 @@ const LoginPage: FC = () => {
             type="email"
             placeholder="E-mail"
             status={emailError ? InputStatus.error : null}
+            icon={IconType.email}
             onChange={(value) => setEmail(value)}
           />
 
@@ -78,6 +80,7 @@ const LoginPage: FC = () => {
             type="password"
             placeholder="Password"
             status={passwordError ? InputStatus.error : null}
+            icon={IconType.lock}
             onChange={(value) => setPassword(value)}
           />
 

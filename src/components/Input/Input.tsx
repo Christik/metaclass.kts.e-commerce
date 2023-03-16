@@ -7,6 +7,8 @@ import {
   useState,
 } from "react";
 
+import Icon, { IconType } from "@components/Icon";
+import { IconColor } from "@components/Icon/Icon";
 import classnames from "classnames";
 
 import styles from "./Input.module.scss";
@@ -24,6 +26,7 @@ type InputProps = Omit<
   value?: string;
   type?: string;
   status?: InputStatus | null;
+  icon?: IconType;
   onChange: (value: string) => void;
 };
 
@@ -32,6 +35,7 @@ const Input: FC<InputProps> = ({
   type = "text",
   value = "",
   status,
+  icon,
   onChange,
   ...args
 }) => {
@@ -49,16 +53,28 @@ const Input: FC<InputProps> = ({
   }, [value]);
 
   return (
-    <div className={className}>
+    <div className={classnames(styles["input-wrapper"], className)}>
       <input
-        className={classnames(styles.input, {
-          [styles[`input_${status}`]]: status,
-        })}
+        className={classnames(
+          styles.input,
+          { [styles["input_has-icon"]]: icon },
+          {
+            [styles[`input_${status}`]]: status,
+          }
+        )}
         type={type}
         value={valueState}
         onChange={handleChange}
         {...args}
       />
+
+      {icon && (
+        <Icon
+          className={styles.icon}
+          type={icon}
+          color={status ? IconColor[status] : IconColor.secondary}
+        />
+      )}
     </div>
   );
 };

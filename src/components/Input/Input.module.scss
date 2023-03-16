@@ -1,6 +1,14 @@
 @import "@styles/variables.scss";
 
 /*=========================
+  Wrapper
+===========================*/
+
+.input-wrapper {
+  position: relative;
+}
+
+/*=========================
   Input
 ===========================*/
 
@@ -14,11 +22,19 @@
   background: $secondary-bg-color;
   outline: none;
 
+  &_has-icon {
+    padding-left: $control-height;
+  }
+
   @media #{$mobile} {
     height: $mob-control-height;
     padding: 0 18px;
     font-size: 14px;
-  }
+
+    &_has-icon {
+      padding-left: $mob-control-height;
+    }
+   }
 
   &:focus {
     border-color: $accent-border-color;
@@ -28,13 +44,30 @@
     color: $secondary-text-color;
   }
 
-  &_error,
-  &_error:focus {
+  &_error {
     border-color: $error-color;
   }
 
-  &_warning,
-  &_warning:focus {
+  &_warning {
     border-color: $warning-color;
+  }
+}
+
+/*=========================
+  Icon
+===========================*/
+
+.icon {
+  position: absolute;
+  left: calc($control-height / 2);
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  .input:focus + & {
+    background-color: $accent-text-color;
+  }
+
+  @media #{$mobile} {
+    left: calc($mob-control-height / 2);
   }
 }

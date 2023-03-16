@@ -1,0 +1,37 @@
+@import "@styles/variables.scss";
+
+/*=========================
+  Icon
+===========================*/
+
+$icons: "email", "lock", "user", "search";
+
+@mixin icon-size($size) {
+  width: $size;
+  height: $size;
+}
+
+.icon {
+  @include icon-size(24px);
+
+  display: block;
+  background: $primary-text-color;
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: 50% 50%;
+
+  @each $icon in $icons {
+    &_#{$icon} {
+      mask-image: url("@static/img/icons/#{$icon}.svg");
+    }
+  }
+
+  &_secondary { background-color: $secondary-text-color; }
+  &_accent { background-color: $accent-text-color; }
+  &_error { background-color: $error-color; }
+  &_warning { background-color: $warning-color; }
+
+  @media #{$mobile} {
+    @include icon-size(18px);
+  }
+}

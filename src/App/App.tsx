@@ -7,7 +7,7 @@ import { ROUTS } from "@config/routs";
 import rootStore from "@store/RootStore/instance";
 import { AuthStatus } from "@utils/auth";
 import { observer } from "mobx-react-lite";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route, HashRouter } from "react-router-dom";
 
 import styles from "./App.module.scss";
 import CatalogPage from "./pages/CatalogPage";
@@ -22,7 +22,7 @@ const App: FC = () => {
   }, []);
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       {rootStore.auth.status === AuthStatus.unknown ? (
         <div className={styles.loader}>
           <Loader />
@@ -45,7 +45,7 @@ const App: FC = () => {
           </Route>
         </Routes>
       )}
-    </BrowserRouter>
+    </HashRouter>
   );
 };
 

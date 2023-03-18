@@ -25,7 +25,7 @@ const getSettingsForStyles = (withModules = false) => {
           modules: {
             localIdentName: !isProd
               ? "[path][name]__[local]"
-              : "[hash: base64]",
+              : "[hash:base64]",
           },
         },
       },

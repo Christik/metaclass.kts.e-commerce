@@ -12,8 +12,6 @@ $icons: "email", "lock", "user", "search";
 }
 
 .icon {
-  @include icon-size(24px);
-
   display: block;
   background: $primary-text-color;
   mask-size: contain;
@@ -30,6 +28,18 @@ $icons: "email", "lock", "user", "search";
   &_accent { background-color: $accent-text-color; }
   &_error { background-color: $error-color; }
   &_warning { background-color: $warning-color; }
+
+  &_size-s {
+    @include icon-size(16px);
+  }
+
+  &_size-m {
+    @include icon-size(24px);
+  }
+
+  &_size-l {
+    @include icon-size(30px);
+  }
 
   @media #{$mobile} {
     @include icon-size(18px);

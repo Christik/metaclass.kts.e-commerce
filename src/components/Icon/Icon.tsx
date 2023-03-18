@@ -18,19 +18,27 @@ export enum IconColor {
   warning = "warning",
 }
 
+export enum IconSize {
+  s = "s",
+  m = "m",
+  l = "l",
+}
+
 type IconProps = {
   className?: string;
   type: IconType;
   color?: IconColor | null;
+  size?: IconSize | null;
 };
 
-const Icon: FC<IconProps> = ({ className, type, color }) => {
+const Icon: FC<IconProps> = ({ className, type, color, size = IconSize.m }) => {
   return (
     <i
       className={classnames(
         styles.icon,
         [styles[`icon_${type}`]],
         { [styles[`icon_${color}`]]: color },
+        { [styles[`icon_size-${size}`]]: size },
         className
       )}
     ></i>

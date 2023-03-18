@@ -1,5 +1,7 @@
 import { FC, memo } from "react";
 
+import Icon, { IconType } from "@components/Icon";
+import { IconSize } from "@components/Icon/Icon";
 import { ROUTS } from "@config/routs";
 import logo from "@static/img/logo.svg";
 import { Link } from "react-router-dom";
@@ -12,6 +14,10 @@ const Header: FC = () => {
       <div className={styles.inner}>
         <Link to={ROUTS.INDEX} className={styles.logo}>
           <img src={logo} width="131" height="42" alt="Lalasia" />
+        </Link>
+
+        <Link to={ROUTS.USER}>
+          <Icon type={IconType.user} size={IconSize.l} />
         </Link>
       </div>
     </header>

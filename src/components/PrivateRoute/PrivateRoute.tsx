@@ -9,7 +9,7 @@ type PrivateRouteProps = {
 };
 
 const PrivateRoute: FC<PrivateRouteProps> = ({ isAuthorized, children }) => {
-  return isAuthorized ? children : <Navigate to={ROUTS.NOT_FOUND} />;
+  return isAuthorized ? children : <Navigate to={ROUTS.LOGIN} />;
 };
 
 export default PrivateRoute;
